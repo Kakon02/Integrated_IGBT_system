@@ -1,15 +1,17 @@
-# from test import EX300_12
+# from EX30012 import EX300_12
 
-# try:
-#     device = EX300_12()
-#     device.turn_on()
-#     device.set_voltage(5)
-#     voltage = device.measure_voltage()
-#     print(f"Measured Voltage: {voltage} V")
-#     device.turn_off()
-#     device.close()
-# except RuntimeError as e:
-#     print(e)
+# ex = EX300_12()
+
+# info = ex.get_connection_info()
+# print("Connected on:", info["port"])
+# print("Baud rate:", info["baud_rate"])
+
+# ex.set_voltage(5.0)
+# print("Voltage set. Measuring...")
+# print("Voltage:", ex.measure_voltage(), "V")
+
+# ex.turn_off()
+# ex.close()
 
 # from LKLAB import LKLabController
 
@@ -49,3 +51,15 @@
 
 # # Release devices when done
 # daq.release_all()
+
+# from DC61802F import DCPowerController
+
+# dc = DCPowerController()
+
+# info = dc.get_connection_info()
+# print(f"Connected to {info['model']} on {info['port']}")
+
+# dc.run_voltage_sequence(150)  # Set 150V and start
+# time.sleep(3)
+# dc.stop()
+# dc.close()
