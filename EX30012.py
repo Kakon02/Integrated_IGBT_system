@@ -80,3 +80,14 @@ class EX300_12:
     def close(self):
         if self.instrument:
             self.instrument.close()
+
+ex = EX300_12()
+
+ex.turn_on()
+ex.set_voltage(10.0)
+print("Voltage set. Measuring...")
+print("Voltage:", ex.measure_voltage(), "V")
+
+time.sleep(20)
+ex.turn_off()
+ex.close()

@@ -63,9 +63,8 @@ class MCCDAQ:
             raise RuntimeError("No CTRPULSE-capable channels found on the device.")
 
     def _configure_first_detected_device(self):
-        from mcculw import ul
         ul.ignore_instacal()
-        devices = ul.get_daq_device_inventory(ul.DeviceInterface.ANY)
+        devices = ul.get_daq_device_inventory(InterfaceType.ANY)  # Use InterfaceType.ANY
         if not devices:
             raise RuntimeError("No MCC devices found.")
         ul.create_daq_device(self.board_num, devices[0])
@@ -100,3 +99,41 @@ class MCCDAQ:
                     ul.pulse_out_stop(self.board_num, chan)
                 except ULError:
                     pass  # Silently skip any stop failures
+
+daq_manager = MCCDAQManager()
+# List all detected devices
+print("Detected Devices:")
+devices = daq_manager.list_devices()
+if not devices:
+    print("No devices detected.")
+    exit(1)
+
+for dev in devices:
+    print(dev)
+
+# Flash LED on all detected devices
+print("\nFlashing LEDs on all devices...")
+for dev in devices:
+    daq_manager.flash_led(dev["board_num"])
+
+# Select the first detected device for pulse output
+board_num = devices[0]["board_num"]
+print(f"\nUsing board {board_num} for pulse output.")
+
+# Initialize the MCCDAQ class for pulse output
+mcc_daq = MCCDAQ(board_num=board_num)
+
+# Start a pulse output on the first available channel
+print("\nStarting pulse output...")
+frequency = 5000000  # 1 kHz
+duty_cycle = 0.5  # 50%
+actual_freq, actual_duty = mcc_daq.start_pulse(frequency=frequency, duty_cycle=duty_cycle)
+print(f"Pulse output started with frequency: {actual_freq} Hz, duty cycle: {actual_duty * 100}%")
+
+# Wait for 5 seconds to observe the pulse output
+import time
+time.sleep(30)
+
+# Stop all pulse outputs
+print("\nStopping all pulse outputs...")
+mcc_daq.stop_all()

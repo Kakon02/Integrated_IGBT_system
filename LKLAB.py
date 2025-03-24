@@ -1,7 +1,7 @@
 # lklab_controller.py
 
 import serial
-from pymodbus.client import ModbusSerialClient as ModbusClient
+from pymodbus.client.sync import ModbusSerialClient as ModbusClient    
 
 
 class LKLabController:
@@ -56,22 +56,31 @@ class LKLabController:
         self.operation_value = True
 
     def turn_off_operation(self):
-        self.client.write_register(25, 0, unit=self.slave_id)
+        self.client.write_register(25, 1, unit=self.slave_id)
         self.operation_value = False
-
-    def run_loop(self, loop_list):
-        if not loop_list or not isinstance(loop_list, list):
-            return
-        self.turn_on_operation()
-        for i in range(0, len(loop_list), 4):
-            temp = float(loop_list[i])
-            hour = int(loop_list[i + 1])
-            minute = int(loop_list[i + 2])
-            second = int(loop_list[i + 3])
-            duration_ms = (hour * 3600 + minute * 60 + second) * 1000
-            self.set_temperature(temp)
-            self.client.sleep(duration_ms / 1000)
-        self.turn_off_operation()
 
     def close(self):
         self.client.close()
+
+
+
+
+lk = LKLabController(port='COM3')
+
+# Get current & setpoint temps
+temps = lk.get_temperatures()
+print("Current:", temps["current"], "Setpoint:", temps["setpoint"])
+
+# Set new temperature
+lk.set_temperature(-10.0)
+
+# Increase temp by +1.0°C
+# lk.adjust_temperature(+1.0)
+
+# Turn on/off operation
+# lk.turn_on_operation()
+lk.turn_off_operation()
+
+# Run a simple loop (e.g., [temp, hr, min, sec] * n)
+
+lk.close()
