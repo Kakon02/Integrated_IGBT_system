@@ -7,7 +7,13 @@ class SettingsTabApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Settings Tab Test")
-        self.geometry("400x500")  # Set the window size
+
+        # Automatically adjust geometry to 80% of screen size
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        window_width = int(screen_width * 0.8)
+        window_height = int(screen_height * 0.8)
+        self.geometry(f"{window_width}x{window_height}+{int((screen_width - window_width) / 2)}+{int((screen_height - window_height) / 2)}")
 
         # Create a tab control
         tab_control = ttk.Notebook(self)
@@ -32,14 +38,14 @@ class SettingsTabApp(tk.Tk):
         style.configure("Custom.TLabelframe.Label", font=("Arial", 14))
 
         # Main Settings Label
-        ttk.Label(self.settings_tab, text="Port Settings", font=("Arial", 18)).grid(row=0, column=0, columnspan=2, padx=10, pady=20)
+        ttk.Label(self.settings_tab, text="Port Settings", font=("Arial", 18)).grid(row=0, column=0, columnspan=4, padx=10, pady=20)
 
         # Create a labeled box (LabelFrame) for "System 1"
         system1_frame = ttk.LabelFrame(self.settings_tab, text="System 1", style="Custom.TLabelframe")
         system1_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
 
         # Add Pulse widgets inside the "System 1" box
-        ttk.Label(system1_frame, text="Pulse", font=("Arial", 12)).grid(row=0, column=0, rowspan=2,sticky="e", padx=10, pady=5)
+        ttk.Label(system1_frame, text="Pulse Port", font=("Arial", 12)).grid(row=0, column=0, rowspan=2,sticky="e", padx=10, pady=5)
 
         ttk.Label(system1_frame, text="COM Port:", font=("Arial", 12)).grid(row=0, column=1, sticky="e", padx=10, pady=5)
         self.com_port_combobox = ttk.Combobox(system1_frame, width=15, font=("Arial", 12), state="readonly")
@@ -58,7 +64,7 @@ class SettingsTabApp(tk.Tk):
 
         # Add Voltage widgets inside the "System 1" box
 
-        ttk.Label(system1_frame, text="Voltage", font=("Arial", 12)).grid(row=3, column=0, rowspan=2, sticky="e", padx=10, pady=5)
+        ttk.Label(system1_frame, text="Voltage Port", font=("Arial", 12)).grid(row=3, column=0, rowspan=2, sticky="e", padx=10, pady=5)
 
         ttk.Label(system1_frame, text="COM Port:", font=("Arial", 12)).grid(row=3, column=1, sticky="e", padx=10, pady=5)
         self.voltage_com_port_combobox = ttk.Combobox(system1_frame, width=15, font=("Arial", 12), state="readonly")
@@ -74,7 +80,7 @@ class SettingsTabApp(tk.Tk):
         ttk.Separator(system1_frame, orient="horizontal").grid(row=5, column=0, columnspan=3, sticky="ew", pady=20)
 
         # Add Coolr widgets insdie the "System 1" box
-        ttk.Label(system1_frame, text="Cooler", font=("Arial", 12)).grid(row=6, column=0, rowspan=2, sticky="e", padx=10, pady=5)
+        ttk.Label(system1_frame, text="Cooler Port", font=("Arial", 12)).grid(row=6, column=0, rowspan=2, sticky="e", padx=10, pady=5)
 
         ttk.Label(system1_frame, text="COM Port:", font=("Arial", 12)).grid(row=6, column=1, sticky="e", padx=10, pady=5)
         self.cooler_com_port_combobox = ttk.Combobox(system1_frame, width=15, font=("Arial", 12), state="readonly")
@@ -92,7 +98,7 @@ class SettingsTabApp(tk.Tk):
         system2_frame.grid(row=1, column=2, columnspan=2, padx=10, pady=10, sticky="nsew")
 
         # Add Pulse widgets inside the "System 2" box
-        ttk.Label(system2_frame, text="Pulse", font=("Arial", 12)).grid(row=0, column=0, rowspan=2, sticky="e", padx=10, pady=5)
+        ttk.Label(system2_frame, text="Pulse Port", font=("Arial", 12)).grid(row=0, column=0, rowspan=2, sticky="e", padx=10, pady=5)
 
         ttk.Label(system2_frame, text="COM Port:", font=("Arial", 12)).grid(row=0, column=1, sticky="e", padx=10, pady=5)
         self.system2_com_port_combobox = ttk.Combobox(system2_frame, width=15, font=("Arial", 12), state="readonly")
@@ -109,7 +115,7 @@ class SettingsTabApp(tk.Tk):
         ttk.Separator(system2_frame, orient="horizontal").grid(row=2, column=0, columnspan=3, sticky="ew", pady=20)
 
         # Add Voltage widgets inside the "System 2" box
-        ttk.Label(system2_frame, text="Voltage", font=("Arial", 12)).grid(row=3, column=0, rowspan=2, sticky="e", padx=10, pady=5)
+        ttk.Label(system2_frame, text="Voltage Port", font=("Arial", 12)).grid(row=3, column=0, rowspan=2, sticky="e", padx=10, pady=5)
 
         ttk.Label(system2_frame, text="COM Port:", font=("Arial", 12)).grid(row=3, column=1, sticky="e", padx=10, pady=5)
         self.system2_voltage_com_port_combobox = ttk.Combobox(system2_frame, width=15, font=("Arial", 12), state="readonly")
@@ -126,7 +132,7 @@ class SettingsTabApp(tk.Tk):
         ttk.Separator(system2_frame, orient="horizontal").grid(row=5, column=0, columnspan=3, sticky="ew", pady=20)
 
         # Add Cooler widgets insdie the "System 2" box
-        ttk.Label(system2_frame, text="Cooler", font=("Arial", 12)).grid(row=6, column=0, rowspan=2, sticky="e", padx=10, pady=5)
+        ttk.Label(system2_frame, text="Cooler Port", font=("Arial", 12)).grid(row=6, column=0, rowspan=2, sticky="e", padx=10, pady=5)
 
         ttk.Label(system2_frame, text="COM Port:", font=("Arial", 12)).grid(row=6, column=1, sticky="e", padx=10, pady=5)
         self.system2_cooler_com_port_combobox = ttk.Combobox(system2_frame, width=15, font=("Arial", 12), state="readonly")

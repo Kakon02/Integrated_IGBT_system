@@ -81,13 +81,13 @@ class EX300_12:
         if self.instrument:
             self.instrument.close()
 
-ex = EX300_12()
+# ex = EX300_12()
 
-ex.turn_on()
-ex.set_voltage(10.0)
-print("Voltage set. Measuring...")
-print("Voltage:", ex.measure_voltage(), "V")
+# ex.turn_on()
+# ex.set_voltage(10.0)
+# print("Voltage set. Measuring...")
+# print("Voltage:", ex.measure_voltage(), "V")
 
-time.sleep(20)
-ex.turn_off()
-ex.close()
+# time.sleep(20)
+# ex.turn_off()
+# ex.close()

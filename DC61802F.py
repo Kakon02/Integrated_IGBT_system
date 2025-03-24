@@ -90,16 +90,18 @@ class DCPowerController:
         self._send_bytes(msg)
 
     def run_voltage_sequence(self, voltage):
-        """Run a voltage sequence: stop, set mode, set voltage, and start."""
         if not self.connected:
             raise RuntimeError("Device not connected.")
         self.stop()
+        time.sleep(0.05)
+        self.enter_normal_mode()  # <--- ADD THIS
         time.sleep(0.05)
         self.set_dc_mode()
         time.sleep(0.05)
         self.set_voltage(voltage)
         time.sleep(0.05)
         self.start()
+
 
     def get_connection_info(self):
         """Get connection information."""
@@ -112,17 +114,17 @@ class DCPowerController:
 
 
 # Example usage
-if __name__ == "__main__":
-    try:
-        dc = DCPowerController()
+# if __name__ == "__main__":
+#     try:
+#         dc = DCPowerController()
 
-        info = dc.get_connection_info()
-        print(f"Connected to {info['model']} on {info['port']}")
+#         info = dc.get_connection_info()
+#         print(f"Connected to {info['model']} on {info['port']}")
 
-        # Run a voltage sequence
-        dc.run_voltage_sequence(10)  # Set 150V and start
-        # time.sleep(3)
-        # dc.stop()
-        # dc.close()
-    except RuntimeError as e:
-        print(e)
+#         # Run a voltage sequence
+#         dc.run_voltage_sequence(10)  # Set 150V and start
+#         # time.sleep(3)
+#         # dc.stop()
+#         # dc.close()
+#     except RuntimeError as e:
+#         print(e)

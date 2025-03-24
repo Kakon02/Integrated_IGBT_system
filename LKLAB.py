@@ -65,22 +65,22 @@ class LKLabController:
 
 
 
-lk = LKLabController(port='COM3')
+# lk = LKLabController(port='COM3')
 
-# Get current & setpoint temps
-temps = lk.get_temperatures()
-print("Current:", temps["current"], "Setpoint:", temps["setpoint"])
+# # Get current & setpoint temps
+# temps = lk.get_temperatures()
+# print("Current:", temps["current"], "Setpoint:", temps["setpoint"])
 
-# Set new temperature
-lk.set_temperature(-10.0)
+# # Set new temperature
+# lk.set_temperature(-10.0)
 
-# Increase temp by +1.0°C
-# lk.adjust_temperature(+1.0)
+# # Increase temp by +1.0°C
+# # lk.adjust_temperature(+1.0)
 
-# Turn on/off operation
-# lk.turn_on_operation()
-lk.turn_off_operation()
+# # Turn on/off operation
+# # lk.turn_on_operation()
+# lk.turn_off_operation()
 
-# Run a simple loop (e.g., [temp, hr, min, sec] * n)
+# # Run a simple loop (e.g., [temp, hr, min, sec] * n)
 
-lk.close()
+# lk.close()
