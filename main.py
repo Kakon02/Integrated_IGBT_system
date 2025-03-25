@@ -8,6 +8,7 @@ import sys
 import serial
 from datetime import datetime, timedelta
 
+
 # Load the UI file
 port_settings_ui = uic.loadUiType("port_settings.ui")[0]
 
@@ -19,14 +20,14 @@ class PortSettingsApp(QMainWindow, port_settings_ui):
 def refresh_FG_devices(combo_box, console):
     devices = daq_manager.list_devices()
     if not devices:
-        console.append("No devices found.")
+        console.append("❌ No devices found.")
     else:
         combo_box.clear()
         combo_box.addItems([device["unique_id"] for device in devices])
 
 def connect_fg_device(combo_box, connection_status_label, console):
     if not combo_box.currentText():
-        console.append("No board selected.")
+        console.append("❌ No board selected.")
         return
 
     connection_status_label.setText("Connecting...")
@@ -51,7 +52,7 @@ def flash_led_on_device(combo_box, console):
         if device["unique_id"] == combo_box.currentText()
     ]
     if not matching_devices:
-        console.append("No matching device found.")
+        console.append("❌ No matching device found.")
     else:
         daq_manager.flash_led(matching_devices[0])
 
@@ -68,6 +69,7 @@ def connect_dc_power_controller(combo_box, baud_rate_line_edit, connection_statu
     # Try connecting to EX30012
     try:
         dc_power_controller = EX300_12(port, baudrate)
+        dc_power_controller._connect_to_port(port)
         connection_info = dc_power_controller.get_auto_connection_info()
         connection_status_label.setText(f"Connected (EX30012) on {connection_info['port']}")
         connection_status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
@@ -97,12 +99,20 @@ def auto_connect_dc_power_controller(DCDC_COM_Port_1, DCDC_COM_Port_2, baud_rate
     # Find usable ports
     for port in ports:
         try:
+            # Try connecting to DC61802F
             dc_power_controller = DCPowerController(port)
             dc_power_controller._connect()
             usable_ports.append(port)
             dc_power_controller.close()
         except RuntimeError:
-            continue
+            # If DC61802F fails, try connecting to EX30012
+            try:
+                ex30012 = EX300_12(port)
+                ex30012._connect_to_port(port)
+                usable_ports.append(port)
+                ex30012.close()
+            except RuntimeError:
+                continue
 
     if not usable_ports:
         console.append("❌ No usable DC power supply found.")
@@ -204,6 +214,9 @@ def system_1_start(Console):
         Console.append("❌ Please connect all devices before starting the system.")
         return
 
+    System_1_Loading.setText("System 1 Connection Status: Connected")
+    System_1_Loading.setStyleSheet("color: green; font-family: Arial; font-size: 12px;")
+    
     try:
         freq = float(System_1_Freq.text())
         duty = float(System_1_Duty.text())
@@ -229,14 +242,18 @@ def system_1_start(Console):
 
     # Start progress timer
     System_1_Progress.setValue(0)
-    progress_timer = QtCore.QTimer()
-    progress_timer.timeout.connect(lambda: update_progress(System_1_Progress, runtime, progress_timer, Console, elapsed_time=0))
-    progress_timer.start(1000)
+    global progress_timer_1
+    progress_timer_1 = QtCore.QTimer()
+    progress_timer_1.timeout.connect(lambda: update_progress(System_1_Progress, runtime, progress_timer_1, Console))
+    progress_timer_1.start(1000)
 
 def system_2_start(Console):
     if not check_system_2_connection_status(FG_Connection_Status_2, DCDC_Connection_Status_2, Cooler_Connection_Status_2):
         Console.append("❌ Please connect all devices before starting the system.")
         return
+
+    System_2_Loading.setText("System 2 Connection Status: Connected")
+    System_2_Loading.setStyleSheet("color: green; font-family: Arial; font-size: 12px;")
 
     try:
         freq = float(System_2_Freq.text())
@@ -263,18 +280,18 @@ def system_2_start(Console):
 
     # Start progress timer
     System_2_Progress.setValue(0)
-    progress_timer = QtCore.QTimer()
-    progress_timer.timeout.connect(lambda: update_progress(System_2_Progress, runtime, progress_timer, Console, elapsed_time=0))
-    progress_timer.start(1000)
+    global progress_timer_2
+    progress_timer_2 = QtCore.QTimer()
+    progress_timer_2.timeout.connect(lambda: update_progress(System_2_Progress, runtime, progress_timer_2, Console))
+    progress_timer_2.start(1000)
 
-def update_progress(progress_bar, runtime, timer, Console, elapsed_time, stop_function, combo_box):
+def update_progress(progress_bar, runtime, timer, Console):
+    elapsed_time = progress_bar.value() * runtime / 100
     elapsed_time += 1
     progress_bar.setValue((elapsed_time / runtime) * 100)
     if elapsed_time >= runtime:
         timer.stop()
         Console.append("✅ System completed.")
-        # Call the stop function when the runtime is complete
-        stop_function(combo_box, Console)
 
 def system_1_pause(progress_timer, runtime, elapsed_time):
     if not check_system_1_connection_status(FG_Connection_Status_1, DCDC_Connection_Status_1, Cooler_Connection_Status_1):
@@ -461,7 +478,7 @@ if __name__ == "__main__":
     System_1_RunTime = window.System_1_RunTime
     System_1_ACTime = window.System_1_ACTime
     System_1_Progress = window.System_1_Progress
-
+    System_1_Loading = window.System_1_Loading
 
     System_2_Freq = window.System_2_Freq
     System_2_Freq_unit = window.System_2_Freq_unit
@@ -472,6 +489,7 @@ if __name__ == "__main__":
     System_2_RunTime = window.System_2_RunTime
     System_2_ACTime = window.System_2_ACTime
     System_2_Progress = window.System_2_Progress
+    System_2_Loading = window.System_2_Loading
 
     System_1_Start = window.System_1_Start
     System_1_Pause = window.System_1_Pause
@@ -484,7 +502,8 @@ if __name__ == "__main__":
 
     Console = window.Console
 
-    daq_manager = MCCDAQManager()
+    
+
 
     FG_Refresh_1.clicked.connect(lambda: refresh_FG_devices(FG_Device_Number_1, Console))
     FG_Refresh_2.clicked.connect(lambda: refresh_FG_devices(FG_Device_Number_2, Console))
@@ -524,7 +543,7 @@ if __name__ == "__main__":
     System_1_Stop.clicked.connect(lambda: system_1_stop(FG_Device_Number_1, Console))
     System_2_Stop.clicked.connect(lambda: system_2_stop())
 
-
+    daq_manager = MCCDAQManager()
 
     window.show()
     sys.exit(app.exec_())

@@ -1,10 +1,10 @@
 import serial
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 from serial.tools import list_ports
-
+from typing import Optional
 
 class LKLabController:
-    def __init__(self, port, baudrate=9600, slave_id=1, timeout=1):
+    def __init__(self, port: Optional[str] = None, baudrate=9600, slave_id=1, timeout=1):
         self.client = None
         self.port = port
         self.baudrate = baudrate
@@ -37,7 +37,9 @@ class LKLabController:
                     client.close()
                     raise IOError("Failed to read holding register.")
         except Exception as e:
-            raise ConnectionError(f"Failed to connect to LKLAB device on {self.port}") from e
+            if client:
+                client.close()
+            raise ConnectionError(f"Failed to connect to LKLAB device on {self.port}: {e}")
 
     def _auto_connect(self):
         """Automatically connect to the LKLAB device by scanning available ports."""

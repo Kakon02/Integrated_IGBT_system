@@ -36,8 +36,10 @@ class MCCDAQManager:
         try:
             ul.flash_led(board_num)
             print(f"Flashed LED on board {board_num}")
+            return True
         except ULError as e:
             print(f"Error flashing LED on board {board_num}: {e}")
+            return False
 
     def release_all(self):
         for board_num in self.board_map:
@@ -97,8 +99,9 @@ class MCCDAQ:
             for chan in range(self.first_chan_num, self.last_chan_num + 1):
                 try:
                     ul.pulse_out_stop(self.board_num, chan)
-                except ULError:
-                    pass  # Silently skip any stop failures
+                except ULError as e:
+                    print(f"Error stopping channel {chan}: {e}")
+
     def stop(self, timer_channel):
         try:
             ul.pulse_out_stop(self.board_num, timer_channel)

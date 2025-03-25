@@ -3,10 +3,11 @@
 import serial
 import time
 from serial.tools import list_ports  # Import list_ports for serial port detection
+from typing import Optional
 
 
 class DCPowerController:
-    def __init__(self, port, baudrate=38400, timeout=1):
+    def __init__(self, port: Optional[str] = None, baudrate=38400, timeout=1):
         self.serial = None
         self.port = port
         self.baudrate = baudrate
@@ -64,12 +65,15 @@ class DCPowerController:
         self._send_bytes([0x7B, 0x00, 0x08, 0x01, 0xF0, 0x0C, 0x05, 0x7D])
         time.sleep(0.05)
         response = self.serial.read_all().decode(errors="ignore")
+        print(f"Raw response: {response}")  # Debugging log
         if "61802(F)" in response:
             self.model = "61802(F)"
             return True
         elif "61804(F)" in response:
             self.model = "61804(F)"
             return True
+        elif not response:
+            raise RuntimeError("No response received from the device.")
         return False
 
     def _send_bytes(self, byte_list):

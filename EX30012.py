@@ -15,10 +15,6 @@ class EX300_12:
         self.baud_rate = baud_rate
         self.timeout = timeout
 
-        if port:
-            self._connect_to_port(port)
-        else:
-            self._auto_connect()
 
     def _configure_instrument(self, inst):
         """Configure the instrument with standard settings."""
