@@ -24,17 +24,17 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>801</width>
-      <height>641</height>
+      <x>0</x>
+      <y>0</y>
+      <width>811</width>
+      <height>651</height>
      </rect>
     </property>
     <property name="tabShape">
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -43,6 +43,660 @@
      <attribute name="title">
       <string>Main</string>
      </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>391</width>
+        <height>231</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="System_1_Loading">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="text">
+          <string>System 1 Connection State: Loading...</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="3" column="2">
+          <widget class="QLabel" name="label_32">
+           <property name="text">
+            <string>°C</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_33">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Run Time:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="text">
+            <string>     Frequency:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="System_1_Duty"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_12">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Voltage:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>%</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="System_1_Voltage"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_31">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>      Temperature:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="System_1_RunTime"/>
+         </item>
+         <item row="4" column="2">
+          <widget class="QLabel" name="label_34">
+           <property name="text">
+            <string>min</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QComboBox" name="System_1_Voltage_unit">
+           <item>
+            <property name="text">
+             <string>V</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>kV</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QComboBox" name="System_1_Freq_unit">
+           <item>
+            <property name="text">
+             <string>Hz</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>kHz</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MHz</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="System_1_Temp"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="System_1_Freq"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>  Duty Cycle:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="verticalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>0</y>
+        <width>391</width>
+        <height>231</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QLabel" name="System_2_Loading">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="text">
+          <string>System 2 Connection State: Loading...</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="3" column="2">
+          <widget class="QLabel" name="label_39">
+           <property name="text">
+            <string>°C</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_40">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Run Time:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_41">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>     Frequency:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="System_2_Duty"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_42">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Voltage:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="label_43">
+           <property name="text">
+            <string>%</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="System_2_Voltage"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_44">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>      Temperature:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="System_2_RunTime"/>
+         </item>
+         <item row="4" column="2">
+          <widget class="QLabel" name="label_45">
+           <property name="text">
+            <string>min</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QComboBox" name="System_2_Voltage_unit">
+           <item>
+            <property name="text">
+             <string>V</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>kV</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QComboBox" name="System_2_Freq_unit">
+           <item>
+            <property name="text">
+             <string>Hz</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>kHz</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MHz</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="System_2_Temp"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="System_2_Freq"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_46">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>  Duty Cycle:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="Line" name="line_2">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>-10</y>
+        <width>211</width>
+        <height>431</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="System_1_Start">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>300</y>
+        <width>131</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="System_1_Pause">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>300</y>
+        <width>121</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="System_1_Stop">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>300</y>
+        <width>111</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>250</y>
+        <width>221</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="text">
+       <string>Approximate Completion Time:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="System_1_ACTime">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>250</y>
+        <width>161</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="text">
+       <string>Time</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="Line" name="line_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>230</y>
+        <width>791</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="System_1_Progress">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>380</y>
+        <width>381</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="textDirection">
+       <enum>QProgressBar::TopToBottom</enum>
+      </property>
+      <property name="format">
+       <string extracomment="0">%p%</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="System_2_Pause">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>300</y>
+        <width>121</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pause</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="System_2_ACTime">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>250</y>
+        <width>161</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="text">
+       <string>Time</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="System_2_Stop">
+      <property name="geometry">
+       <rect>
+        <x>680</x>
+        <y>300</y>
+        <width>111</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_37">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>250</y>
+        <width>221</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="text">
+       <string>Approximate Completion Time:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="System_2_Progress">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>380</y>
+        <width>381</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="textDirection">
+       <enum>QProgressBar::TopToBottom</enum>
+      </property>
+      <property name="format">
+       <string extracomment="0">%p%</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="System_2_Start">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>300</y>
+        <width>131</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </widget>
+     <zorder>line_2</zorder>
+     <zorder>verticalLayoutWidget</zorder>
+     <zorder>verticalLayoutWidget_2</zorder>
+     <zorder>System_1_Start</zorder>
+     <zorder>System_1_Pause</zorder>
+     <zorder>System_1_Stop</zorder>
+     <zorder>label_14</zorder>
+     <zorder>System_1_ACTime</zorder>
+     <zorder>line_3</zorder>
+     <zorder>System_1_Progress</zorder>
+     <zorder>System_2_Pause</zorder>
+     <zorder>System_2_ACTime</zorder>
+     <zorder>System_2_Stop</zorder>
+     <zorder>label_37</zorder>
+     <zorder>System_2_Progress</zorder>
+     <zorder>System_2_Start</zorder>
     </widget>
     <widget class="QWidget" name="port_settings_tab">
      <attribute name="title">
@@ -61,14 +715,14 @@
        <item row="3" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_12">
          <item>
-          <widget class="QPushButton" name="pushButton_7">
+          <widget class="QPushButton" name="Cooler_Connect_2">
            <property name="text">
             <string>Connect</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_8">
+          <widget class="QPushButton" name="Cooler_AutoConnect_2">
            <property name="text">
             <string>Auto Connect</string>
            </property>
@@ -79,14 +733,14 @@
        <item row="2" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_13">
          <item>
-          <widget class="QPushButton" name="pushButton_9">
+          <widget class="QPushButton" name="DCDC_Connect_2">
            <property name="text">
             <string>Connect</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_10">
+          <widget class="QPushButton" name="DCDC_AutoConnect_2">
            <property name="text">
             <string>Auto Connect</string>
            </property>
@@ -97,23 +751,23 @@
        <item row="1" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_14">
          <item>
-          <widget class="QPushButton" name="pushButton_11">
+          <widget class="QPushButton" name="FG_Connect_2">
            <property name="text">
             <string>Connect</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_12">
+          <widget class="QPushButton" name="FG_Refresh_2">
            <property name="text">
-            <string>Auto Connect</string>
+            <string>Refresh</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="label_19">
+        <widget class="QLabel" name="FG_Connection_Status_2">
          <property name="font">
           <font>
            <family>Arial</family>
@@ -122,11 +776,14 @@
          </property>
          <property name="text">
           <string>Disconnected</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLabel" name="label_20">
+        <widget class="QLabel" name="DCDC_Connection_Status_2">
          <property name="font">
           <font>
            <family>Arial</family>
@@ -135,11 +792,14 @@
          </property>
          <property name="text">
           <string>Disconnected</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLabel" name="label_21">
+        <widget class="QLabel" name="Cooler_Connection_Status_2">
          <property name="font">
           <font>
            <family>Arial</family>
@@ -148,6 +808,9 @@
          </property>
          <property name="text">
           <string>Disconnected</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -180,7 +843,7 @@
             </font>
            </property>
            <property name="text">
-            <string>COM Port:</string>
+            <string>Device Number</string>
            </property>
           </widget>
          </item>
@@ -193,7 +856,10 @@
             </font>
            </property>
            <property name="text">
-            <string>BaudRate:</string>
+            <string>Find Device</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -202,46 +868,16 @@
        <item row="0" column="2">
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
-          <widget class="QComboBox" name="comboBox_2">
+          <widget class="QComboBox" name="FG_Device_Number_1">
            <property name="editable">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
-           <item>
-            <property name="text">
-             <string>COM1</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM2</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM3</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM4</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM5</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM6</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QPushButton" name="FG_Find_Device_1">
            <property name="text">
-            <string>9600</string>
+            <string>Flash Led</string>
            </property>
           </widget>
          </item>
@@ -286,9 +922,9 @@
        <item row="1" column="2">
         <layout class="QVBoxLayout" name="verticalLayout_11">
          <item>
-          <widget class="QComboBox" name="comboBox_3">
+          <widget class="QComboBox" name="DCDC_COM_Port_1">
            <property name="editable">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <item>
             <property name="text">
@@ -323,9 +959,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_3">
+          <widget class="QLineEdit" name="DCDC_BaudRate_1">
            <property name="text">
-            <string>9600</string>
+            <string>38400</string>
            </property>
           </widget>
          </item>
@@ -409,9 +1045,9 @@
        <item row="2" column="2">
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="Cooler_COM_Port_1">
            <property name="editable">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <item>
             <property name="text">
@@ -446,7 +1082,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_2">
+          <widget class="QLineEdit" name="Cooler_BaudRate_1">
            <property name="text">
             <string>9600</string>
            </property>
@@ -466,48 +1102,51 @@
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="1">
-        <layout class="QVBoxLayout" name="verticalLayout_15">
-         <property name="leftMargin">
-          <number>20</number>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_27">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+          </font>
          </property>
-         <property name="rightMargin">
-          <number>20</number>
+         <property name="text">
+          <string>  DC/DC #2  </string>
          </property>
-         <item>
-          <widget class="QLabel" name="label_22">
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>COM Port:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_23">
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>BaudRate:</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        </widget>
        </item>
-       <item row="0" column="2">
-        <layout class="QVBoxLayout" name="verticalLayout_16">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_26">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>  Function Generator #2  </string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_28">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>  Cooler #2  </string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <layout class="QVBoxLayout" name="verticalLayout_20">
          <item>
-          <widget class="QComboBox" name="comboBox_4">
+          <widget class="QComboBox" name="Cooler_COM_Port_2">
            <property name="editable">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <item>
             <property name="text">
@@ -542,9 +1181,102 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_4">
+          <widget class="QLineEdit" name="Cooler_BaudRate_2">
            <property name="text">
             <string>9600</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_19">
+         <property name="leftMargin">
+          <number>20</number>
+         </property>
+         <property name="rightMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_29">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>COM Port:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_30">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>BaudRate:</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_15">
+         <property name="leftMargin">
+          <number>20</number>
+         </property>
+         <property name="rightMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_22">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Device Number</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_23">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Find Device</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="2">
+        <layout class="QVBoxLayout" name="verticalLayout_16">
+         <item>
+          <widget class="QComboBox" name="FG_Device_Number_2">
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="FG_Find_Device_2">
+           <property name="text">
+            <string>Flash Led</string>
            </property>
           </widget>
          </item>
@@ -589,9 +1321,9 @@
        <item row="1" column="2">
         <layout class="QVBoxLayout" name="verticalLayout_18">
          <item>
-          <widget class="QComboBox" name="comboBox_5">
+          <widget class="QComboBox" name="DCDC_COM_Port_2">
            <property name="editable">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <item>
             <property name="text">
@@ -626,132 +1358,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_5">
+          <widget class="QLineEdit" name="DCDC_BaudRate_2">
            <property name="text">
-            <string>9600</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_26">
-         <property name="font">
-          <font>
-           <family>Arial</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>  Function Generator #2  </string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_27">
-         <property name="font">
-          <font>
-           <family>Arial</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>  DC/DC #2  </string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_28">
-         <property name="font">
-          <font>
-           <family>Arial</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>  Cooler #2  </string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <layout class="QVBoxLayout" name="verticalLayout_19">
-         <property name="leftMargin">
-          <number>20</number>
-         </property>
-         <property name="rightMargin">
-          <number>20</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="label_29">
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>COM Port:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_30">
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>BaudRate:</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="2">
-        <layout class="QVBoxLayout" name="verticalLayout_20">
-         <item>
-          <widget class="QComboBox" name="comboBox_6">
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>COM1</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM2</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM3</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM4</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM5</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>COM6</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_6">
-           <property name="text">
-            <string>9600</string>
+            <string>38400</string>
            </property>
           </widget>
          </item>
@@ -772,14 +1381,14 @@
        <item row="3" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QPushButton" name="pushButton_5">
+          <widget class="QPushButton" name="Cooler_Connect_1">
            <property name="text">
             <string>Connect</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_6">
+          <widget class="QPushButton" name="Cooler_AutoConnect_1">
            <property name="text">
             <string>Auto Connect</string>
            </property>
@@ -790,14 +1399,14 @@
        <item row="2" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="DCDC_Connect_1">
            <property name="text">
             <string>Connect</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="DCDC_AutoConnect_1">
            <property name="text">
             <string>Auto Connect</string>
            </property>
@@ -808,23 +1417,23 @@
        <item row="1" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="FG_Connect_1">
            <property name="text">
             <string>Connect</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="FG_Refresh_1">
            <property name="text">
-            <string>Auto Connect</string>
+            <string>Refresh</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="label_8">
+        <widget class="QLabel" name="FG_Connection_Status_1">
          <property name="font">
           <font>
            <family>Arial</family>
@@ -833,11 +1442,14 @@
          </property>
          <property name="text">
           <string>Disconnected</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLabel" name="label_9">
+        <widget class="QLabel" name="DCDC_Connection_Status_1">
          <property name="font">
           <font>
            <family>Arial</family>
@@ -846,11 +1458,14 @@
          </property>
          <property name="text">
           <string>Disconnected</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLabel" name="label_18">
+        <widget class="QLabel" name="Cooler_Connection_Status_1">
          <property name="font">
           <font>
            <family>Arial</family>
@@ -859,20 +1474,36 @@
          </property>
          <property name="text">
           <string>Disconnected</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>300</y>
+        <width>801</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </widget>
    </widget>
-   <widget class="QTextEdit" name="port_console">
+   <widget class="QTextEdit" name="Console">
     <property name="geometry">
      <rect>
-      <x>810</x>
-      <y>30</y>
-      <width>411</width>
-      <height>621</height>
+      <x>800</x>
+      <y>20</y>
+      <width>421</width>
+      <height>631</height>
      </rect>
     </property>
     <property name="readOnly">
@@ -886,7 +1517,7 @@
      <x>0</x>
      <y>0</y>
      <width>1225</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

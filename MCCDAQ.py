@@ -99,46 +99,52 @@ class MCCDAQ:
                     ul.pulse_out_stop(self.board_num, chan)
                 except ULError:
                     pass  # Silently skip any stop failures
+    def stop(self, timer_channel):
+        try:
+            ul.pulse_out_stop(self.board_num, timer_channel)
+        except ULError as e:
+            raise RuntimeError(f"Failed to stop pulse output: {e}")
 
-daq_manager = MCCDAQManager()
-# List all detected devices
-print("Detected Devices:")
-devices = daq_manager.list_devices()
-if not devices:
-    print("No devices detected.")
-    exit(1)
 
-for dev in devices:
-    print(dev)
+if __name__ == "__main__":
+    daq_manager = MCCDAQManager()
+    # List all detected devices
+    print("Detected Devices:")
+    devices = daq_manager.list_devices()
+    if not devices:
+        print("No devices detected.")
+        exit(1)
 
-# Flash LED on all detected devices
-print("\nFlashing LEDs on all devices...")
-for dev in devices:
-    daq_manager.flash_led(dev["board_num"])
+    for dev in devices:
+        print(dev)
 
-# Select the first detected device for pulse output
-board_num = devices[0]["board_num"]
-print(f"\nUsing board {board_num} for pulse output.")
+    # Flash LED on all detected devices
+    print("\nFlashing LEDs on all devices...")
+    for dev in devices:
+        daq_manager.flash_led(dev["board_num"])
 
-# Initialize the MCCDAQ class for pulse output
-mcc_daq = MCCDAQ(board_num=board_num)
+    # Select the first detected device for pulse output
+    board_num = devices[0]["board_num"]
+    print(f"\nUsing board {board_num} for pulse output.")
 
-# Start a pulse output on the first available channel
-print("\nStarting pulse output...")
-frequency = 5000000  # 1 kHz
-duty_cycle = 0.5  # 50%
-actual_freq, actual_duty = mcc_daq.start_pulse(frequency=frequency, duty_cycle=duty_cycle)
-print(f"Pulse output started with frequency: {actual_freq} Hz, duty cycle: {actual_duty * 100}%")
+    # Initialize the MCCDAQ class for pulse output
+    mcc_daq = MCCDAQ(board_num=board_num)
 
-# Wait for 5 seconds to observe the pulse output
-import time
-time.sleep(30)
+    # Start a pulse output on the first available channel
+    print("\nStarting pulse output...")
+    frequency = 5000000  # 1 kHz
+    duty_cycle = 0.5  # 50%
+    actual_freq, actual_duty = mcc_daq.start_pulse(frequency=frequency, duty_cycle=duty_cycle)
+    print(f"Pulse output started with frequency: {actual_freq} Hz, duty cycle: {actual_duty * 100}%")
 
-# Stop all pulse outputs
-print("\nStopping all pulse outputs...")
-mcc_daq.stop_all()
+    # Wait for 5 seconds to observe the pulse output
+    import time
+    time.sleep(30)
+
+    # Stop all pulse outputs
+    print("\nStopping all pulse outputs...")
+    mcc_daq.stop_all()
 
 
 # Frequency unstable after 5Mhz; Causing the voltage to be unstable
 # Would recommend to use a frequency lower than 5Mhz for stable voltage output
-

@@ -6,17 +6,37 @@ from serial.tools import list_ports  # Import list_ports for serial port detecti
 
 
 class DCPowerController:
-    def __init__(self, baudrate=38400, timeout=1):
+    def __init__(self, port, baudrate=38400, timeout=1):
         self.serial = None
-        self.port = None
+        self.port = port
         self.baudrate = baudrate
         self.timeout = timeout
         self.connected = False
         self.model = None  # "61802(F)" or "61804(F)"
 
-        self._connect()
-
+        # self._auto_connect()
+    
     def _connect(self):
+        ser = serial.Serial(
+            port=self.port,
+            baudrate=self.baudrate,
+            bytesize=serial.EIGHTBITS,
+            parity=serial.PARITY_NONE,
+            stopbits=serial.STOPBITS_ONE,
+            timeout=self.timeout
+        )
+        self.serial = ser
+        if self._identify_model():
+            self.connected = True
+            print(f"✅ Connected to DC Power Supply: {self.model} on {self.port}")
+            return
+        else:
+            ser.close()
+            raise RuntimeError("❌ No compatible DC power supply found.")
+        
+
+
+    def _auto_connect(self):
         ports = [p.device for p in list_ports.comports()]  # Use list_ports.comports()
         for port_name in ports:
             try:
@@ -103,7 +123,7 @@ class DCPowerController:
         self.start()
 
 
-    def get_connection_info(self):
+    def get_auto_connection_info(self):
         """Get connection information."""
         return {"port": self.port, "baudrate": self.baudrate, "model": self.model}
 
@@ -118,7 +138,7 @@ class DCPowerController:
 #     try:
 #         dc = DCPowerController()
 
-#         info = dc.get_connection_info()
+#         info = dc.get_auto_connection_info()
 #         print(f"Connected to {info['model']} on {info['port']}")
 
 #         # Run a voltage sequence

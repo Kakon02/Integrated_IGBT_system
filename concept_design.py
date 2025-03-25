@@ -12,6 +12,8 @@ class MainApp(QtWidgets.QMainWindow):
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.update_label)
+        self.Console.append("🚀 Hello from console!")
+
         self.timer.start(2000)
 
     def update_status_label(self, label, text, color="black", bold=False, size=10):
@@ -29,6 +31,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.update_status_label(self.label_8, msg, color=color, bold=False, size=20)
 
         self.current_index = (self.current_index + 1) % len(self.messages)
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
