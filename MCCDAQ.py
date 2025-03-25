@@ -139,6 +139,6 @@ print("\nStopping all pulse outputs...")
 mcc_daq.stop_all()
 
 
-# Frequency unstable after 10Mhz; Causing the voltage to be unstable
-# Would recommend to use a frequency lower than 10Mhz for stable voltage output
+# Frequency unstable after 5Mhz; Causing the voltage to be unstable
+# Would recommend to use a frequency lower than 5Mhz for stable voltage output
 
