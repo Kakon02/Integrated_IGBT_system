@@ -1,10 +1,10 @@
 import serial
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 from serial.tools import list_ports
-from typing import Optional
+import time
 
 class LKLabController:
-    def __init__(self, port: Optional[str] = None, baudrate=9600, slave_id=1, timeout=1):
+    def __init__(self, port: str = None, baudrate=9600, slave_id=1, timeout=1):
         self.client = None
         self.port = port
         self.baudrate = baudrate
@@ -27,7 +27,7 @@ class LKLabController:
                 timeout=self.timeout
             )
             if client.connect():
-                result = client.read_holding_registers(0, 1, unit=self.slave_id)
+                result = client.read_holding_registers(9, 1, unit=self.slave_id)
                 if not result.isError():
                     self.client = client
                     self._update_operation_state()
@@ -82,6 +82,9 @@ class LKLabController:
 
     def get_temperatures(self):
         """Get the current and setpoint temperatures."""
+        if self.client is None:
+            print("🔄 Attempting to reconnect...")
+            self._connect()  # Attempt to reconnect if client is None
         npv = self.client.read_holding_registers(1, 1, unit=self.slave_id)
         nsv = self.client.read_holding_registers(2, 1, unit=self.slave_id)
         npv_value = self._convert_temp(npv.registers[0])
@@ -115,7 +118,7 @@ class LKLabController:
 
     def turn_off_operation(self):
         """Turn off the operation."""
-        self.client.write_register(25, 0, unit=self.slave_id)
+        self.client.write_register(25, 1, unit=self.slave_id)
         self.operation_value = False
 
     def close(self):
@@ -128,14 +131,12 @@ class LKLabController:
 if __name__ == "__main__":
 
     try:
-        lk = LKLabController('COM4')
+        lk = LKLabController('COM3')
         # lk.port = 'COM4'
         # lk.baudrate = 9600
-        # lk._connect()
+        lk._connect()
 
         # Get current & setpoint temperatures
-        temps = lk.get_temperatures()
-        print("Current Temp:", temps["current"], "Setpoint Temp:", temps["setpoint"])
 
         # Set a new temperature
         lk.set_temperature(25.0)
@@ -144,6 +145,11 @@ if __name__ == "__main__":
         # Turn on operation
         lk.turn_on_operation()
         print("Operation turned on")
+
+        temps = lk.get_temperatures()
+        print("Current Temp:", temps["current"], "Setpoint Temp:", temps["setpoint"])
+
+        time.sleep(5)
 
         # Turn off operation
         lk.turn_off_operation()

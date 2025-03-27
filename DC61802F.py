@@ -51,6 +51,7 @@ class DCPowerController:
                 )
                 self.serial = ser
                 self.port = port_name
+                time.sleep(0.2)
                 if self._identify_model():
                     self.connected = True
                     print(f"✅ Connected to DC Power Supply: {self.model} on {port_name}")

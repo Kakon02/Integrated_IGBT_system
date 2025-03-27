@@ -79,65 +79,62 @@ def connect_dc_power_controller(combo_box, baud_rate_line_edit, connection_statu
         console.append(str(e))
 
     # If EX30012 fails, try connecting to DC61802F
-    dc_power_controller = DCPowerController(port, baudrate)
-    try:
-        if dc_power_controller._connect():
-            connection_status_label.setText("Connected (DC61802F)")
-            connection_status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
-            console.append(f"✅ Connected to DC61802F on {port}")
-        else:
-            raise RuntimeError("Connection failed.")
-    except Exception as e:
-        connection_status_label.setText("Disconnected")
-        connection_status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
-        console.append(f"❌ Failed to connect to any DC Power Controller on {port}: {e}")
+    # dc_power_controller = DCPowerController(port, baudrate)
+    # try:
+    #     if dc_power_controller._connect():
+    #         connection_status_label.setText("Connected (DC61802F)")
+    #         connection_status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
+    #         console.append(f"✅ Connected to DC61802F on {port}")
+    #     else:
+    #         raise RuntimeError("Connection failed.")
+    # except Exception as e:
+    #     connection_status_label.setText("Disconnected")
+    #     connection_status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
+    #     console.append(f"❌ Failed to connect to any DC Power Controller on {port}: {e}")
 
 def auto_connect_dc_power_controller(DCDC_COM_Port_1, DCDC_COM_Port_2, baud_rate_line_edit, connection_status_label_1, connection_status_label_2, console):
-    ports = [p.device for p in serial.tools.list_ports.comports()]
+    
     usable_ports = []
+    ex30012 = EX300_12()
 
-    # Find usable ports
-    for port in ports:
-        try:
-            # Try connecting to DC61802F
-            dc_power_controller = DCPowerController(port)
-            dc_power_controller._connect()
-            usable_ports.append(port)
-            dc_power_controller.close()
-        except RuntimeError:
-            # If DC61802F fails, try connecting to EX30012
-            try:
-                ex30012 = EX300_12(port)
-                ex30012._connect_to_port(port)
-                usable_ports.append(port)
-                ex30012.close()
-            except RuntimeError:
-                continue
+    # try:
+    #     dc_power_controller._auto_connect()
+    #     connection_status_label_1.setText("Connected (DC61802F)")
+    #     connection_status_label_1.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
+    #     # Read the port from the connected DC Power Controller
+    #     dc_power_controller.port = dc_power_controller.serial.port
+    #     # Append the port to the usable_ports list
+    #     usable_ports.append(dc_power_controller.port)
+
+    #     console.append(f"✅ Connected to DC61802F on {dc_power_controller.port}")
+    # except Exception as e:
+    #     pass
+
+    try:
+        ex30012._auto_connect()
+        connection_status_label_1.setText("Connected (EX30012)")
+        connection_status_label_1.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
+        # Read the port from the connected EX30012
+        ex30012.port = ex30012.port_name
+        # Append the port to the usable_ports list
+        usable_ports.append(ex30012.port)
+        console.append(f"✅ Connected to EX30012 on {ex30012.port}")
+    except Exception as e:
+        pass
 
     if not usable_ports:
-        console.append("❌ No usable DC power supply found.")
+        console.append("❌ No compatible DC power supply found.")
+        connection_status_label_1.setText("Disconnected")
+        connection_status_label_1.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
         return
-
+   
     # Select the available ports without clearing the combo boxes
     if usable_ports:
         DCDC_COM_Port_1.setCurrentText(usable_ports[0])
+        DCDC_BaudRate_1.setText(str(ex30012.baud_rate))
     if len(usable_ports) > 1:
         DCDC_COM_Port_2.setCurrentText(usable_ports[1])
 
-    # Connect to the first available device
-    try:
-        DCDC_COM_Port_1.setCurrentText(usable_ports[0])
-        connect_dc_power_controller(DCDC_COM_Port_1, baud_rate_line_edit, connection_status_label_1, console)
-    except RuntimeError as e:
-        console.append(str(e))
-
-    # Connect to the second available device if present
-    if len(usable_ports) > 1:
-        try:
-            DCDC_COM_Port_2.setCurrentText(usable_ports[1])
-            connect_dc_power_controller(DCDC_COM_Port_2, baud_rate_line_edit, connection_status_label_2, console)
-        except RuntimeError as e:
-            console.append(str(e))
 
 def connect_cooler(combo_box, baud_rate_line_edit, connection_status_label, console):
     port = combo_box.currentText()

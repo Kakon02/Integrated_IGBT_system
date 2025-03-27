@@ -30,9 +30,7 @@ class EX300_12:
     def _probe_device(self, inst):
         """Probe the device to check if it's a valid EX300-12."""
         try:
-            inst.write('meas:volt?')
-            time.sleep(0.1)
-            response = inst.read().strip()
+            response = inst.query('meas:volt?').strip()
             return self._is_valid_voltage(response)
         except Exception:
             return False
@@ -44,7 +42,6 @@ class EX300_12:
             resource_str = f'ASRL{com_str}::INSTR'
             inst = self.rm.open_resource(resource_str)
             self._configure_instrument(inst)
-
             if self._probe_device(inst):
                 self.instrument = inst
                 self.port_name = port
@@ -60,6 +57,7 @@ class EX300_12:
         ports = serial.tools.list_ports.comports()
         for port in ports:
             try:
+                time.sleep(0.2)
                 self._connect_to_port(port.device)
                 return
             except RuntimeError:
@@ -102,3 +100,13 @@ class EX300_12:
         if self.instrument:
             self.instrument.close()
             logging.info("✅ Instrument connection closed.")
+
+
+if __name__ == '__main__':
+    ex300_12 = EX300_12()
+    ex300_12._auto_connect()
+    ex300_12.turn_on()
+    ex300_12.set_voltage(10)
+    print(ex300_12.measure_voltage())
+    ex300_12.close()
+
