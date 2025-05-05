@@ -12,12 +12,14 @@ from datetime import datetime, timedelta
 # Load the UI file
 port_settings_ui = uic.loadUiType("port_settings.ui")[0]
 
+daq_manager = MCCDAQManager()
+
 class PortSettingsApp(QMainWindow, port_settings_ui):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
-def refresh_FG_devices(combo_box, console):
+def refresh_FG_devices(combo_box, console): #FG stands for Function Generator
     devices = daq_manager.list_devices()
     if not devices:
         console.append("❌ No devices found.")
@@ -56,8 +58,9 @@ def flash_led_on_device(combo_box, console):
     else:
         daq_manager.flash_led(matching_devices[0])
 
-def connect_dc_power_controller(combo_box, baud_rate_line_edit, connection_status_label, console):
+def connect_dc_power_controller(device_selection, combo_box, baud_rate_line_edit, connection_status_label, console):
     port = combo_box.currentText()
+
     try:
         baudrate = int(baud_rate_line_edit.text())
     except ValueError:
@@ -65,75 +68,42 @@ def connect_dc_power_controller(combo_box, baud_rate_line_edit, connection_statu
         connection_status_label.setText("Disconnected")
         connection_status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
         return
-
-    # Try connecting to EX30012
-    try:
-        dc_power_controller = EX300_12(port, baudrate)
-        dc_power_controller._connect_to_port(port)
-        connection_info = dc_power_controller.get_auto_connection_info()
-        connection_status_label.setText(f"Connected (EX30012) on {connection_info['port']}")
-        connection_status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
-        console.append(f"✅ Connected to EX30012 on {connection_info['port']}")
-        return
-    except RuntimeError as e:
-        console.append(str(e))
-
-    # If EX30012 fails, try connecting to DC61802F
-    # dc_power_controller = DCPowerController(port, baudrate)
-    # try:
-    #     if dc_power_controller._connect():
-    #         connection_status_label.setText("Connected (DC61802F)")
-    #         connection_status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
-    #         console.append(f"✅ Connected to DC61802F on {port}")
-    #     else:
-    #         raise RuntimeError("Connection failed.")
-    # except Exception as e:
-    #     connection_status_label.setText("Disconnected")
-    #     connection_status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
-    #     console.append(f"❌ Failed to connect to any DC Power Controller on {port}: {e}")
-
-def auto_connect_dc_power_controller(DCDC_COM_Port_1, DCDC_COM_Port_2, baud_rate_line_edit, connection_status_label_1, connection_status_label_2, console):
     
-    usable_ports = []
-    ex30012 = EX300_12()
-
-    # try:
-    #     dc_power_controller._auto_connect()
-    #     connection_status_label_1.setText("Connected (DC61802F)")
-    #     connection_status_label_1.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
-    #     # Read the port from the connected DC Power Controller
-    #     dc_power_controller.port = dc_power_controller.serial.port
-    #     # Append the port to the usable_ports list
-    #     usable_ports.append(dc_power_controller.port)
-
-    #     console.append(f"✅ Connected to DC61802F on {dc_power_controller.port}")
-    # except Exception as e:
-    #     pass
-
-    try:
-        ex30012._auto_connect()
-        connection_status_label_1.setText("Connected (EX30012)")
-        connection_status_label_1.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
-        # Read the port from the connected EX30012
-        ex30012.port = ex30012.port_name
-        # Append the port to the usable_ports list
-        usable_ports.append(ex30012.port)
-        console.append(f"✅ Connected to EX30012 on {ex30012.port}")
-    except Exception as e:
-        pass
-
-    if not usable_ports:
-        console.append("❌ No compatible DC power supply found.")
-        connection_status_label_1.setText("Disconnected")
-        connection_status_label_1.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
+    if device_selection.text() == "EX300-12":        
+        # Try connecting to EX30012
+        try:
+            dc_power_controller = EX300_12(port, baudrate)
+            dc_power_controller._connect_to_port(port)
+            connection_info = dc_power_controller.get_connection_info()
+            connection_status_label.setText(f"Connected (EX30012) on {connection_info['port']}")
+            connection_status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
+            console.append(f"✅ Connected to EX30012 on {connection_info['port']}")
+            return
+        
+        except RuntimeError as e:
+            console.append(f"❌ Failed to connect to EX30012 on {port}: {e}")
+            connection_status_label.setText("Disconnected")
+            connection_status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
+            return
+    
+    elif device_selection.text() == "DC61802F":
+        # Try connecting to DC61802F
+        try:
+            dc_power_controller = DCPowerController(port, baudrate)
+            dc_power_controller._connect()
+            connection_status_label.setText("Connected (DC61802F)")
+            connection_status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
+            console.append(f"✅ Connected to DC61802F on {port}")
+        except Exception as e:
+            console.append(f"❌ Failed to connect to DC61802F on {port}: {e}")
+            connection_status_label.setText("Disconnected")
+            connection_status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
+            return
+    else:
+        console.append("❌ Invalid device selection. Please select a valid device.")
+        connection_status_label.setText("Disconnected")
+        connection_status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
         return
-   
-    # Select the available ports without clearing the combo boxes
-    if usable_ports:
-        DCDC_COM_Port_1.setCurrentText(usable_ports[0])
-        DCDC_BaudRate_1.setText(str(ex30012.baud_rate))
-    if len(usable_ports) > 1:
-        DCDC_COM_Port_2.setCurrentText(usable_ports[1])
 
 
 def connect_cooler(combo_box, baud_rate_line_edit, connection_status_label, console):
@@ -158,52 +128,13 @@ def connect_cooler(combo_box, baud_rate_line_edit, connection_status_label, cons
         connection_status_label.setText("Disconnected")
         connection_status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
 
-def auto_connect_cooler(Cooler_COM_Port_1, Cooler_COM_Port_2, baud_rate_line_edit, connection_status_label_1, connection_status_label_2, console):
-    ports = [p.device for p in serial.tools.list_ports.comports()]
-    usable_ports = []
-
-    # Find usable ports
-    for port in ports:
-        try:
-            cooler = LKLabController(port)
-            cooler._connect()
-            usable_ports.append(port)
-            cooler.close()
-        except Exception:
-            continue
-
-    if not usable_ports:
-        console.append("❌ No usable cooler found.")
-        return
-
-    # Select the available ports without clearing the combo boxes
-    if usable_ports:
-        Cooler_COM_Port_1.setCurrentText(usable_ports[0])
-    if len(usable_ports) > 1:
-        Cooler_COM_Port_2.setCurrentText(usable_ports[1])
-
-    # Connect to the first available device
-    try:
-        Cooler_COM_Port_1.setCurrentText(usable_ports[0])
-        connect_cooler(Cooler_COM_Port_1, baud_rate_line_edit, connection_status_label_1, console)
-    except Exception as e:
-        console.append(str(e))
-
-    # Connect to the second available device if present
-    if len(usable_ports) > 1:
-        try:
-            Cooler_COM_Port_2.setCurrentText(usable_ports[1])
-            connect_cooler(Cooler_COM_Port_2, baud_rate_line_edit, connection_status_label_2, console)
-        except Exception as e:
-            console.append(str(e))
-
 # Check if FG_Connection_Status_1, DCDC_Connection_Status_1, Cooler_Connection_Status_1 are connected
 def check_system_1_connection_status(FG_Connection_Status_1, DCDC_Connection_Status_1, Cooler_Connection_Status_1):
     return FG_Connection_Status_1.text() == "Connected" and DCDC_Connection_Status_1.text() == "Connected" and Cooler_Connection_Status_1.text() == "Connected"
 
 # Check if FG_Connection_Status_2, DCDC_Connection_Status_2, Cooler_Connection_Status_2 are connected
-def check_system_2_connection_status(FG_Connection_Status_2, DCDC_Connection_Status_2, Cooler_Connection_Status_2):
-    return FG_Connection_Status_2.text() == "Connected" and DCDC_Connection_Status_2.text() == "Connected" and Cooler_Connection_Status_2.text() == "Connected"
+# def check_system_2_connection_status(FG_Connection_Status_2, DCDC_Connection_Status_2, Cooler_Connection_Status_2):
+#     return FG_Connection_Status_2.text() == "Connected" and DCDC_Connection_Status_2.text() == "Connected" and Cooler_Connection_Status_2.text() == "Connected"
 
 
 def system_1_start(Console):
@@ -219,7 +150,7 @@ def system_1_start(Console):
         duty = float(System_1_Duty.text())
         voltage = float(System_1_Voltage.text())
         temp = float(System_1_Temp.text())
-        runtime = int(System_1_RunTime.text())
+        runtime = int(System_1_RunTime.text()) * 60 # in seconds
     except ValueError:
         Console.append("❌ Invalid input values. Please check the fields.")
         return
@@ -241,80 +172,86 @@ def system_1_start(Console):
     System_1_Progress.setValue(0)
     global progress_timer_1
     progress_timer_1 = QtCore.QTimer()
-    progress_timer_1.timeout.connect(lambda: update_progress(System_1_Progress, runtime, progress_timer_1, Console))
+    progress_timer_1.tiemeout.connect(lambda: update_progress(System_1_Progress, runtime, progress_timer_1, Console))
     progress_timer_1.start(1000)
+    System_1_Start.setEnabled(False)
 
-def system_2_start(Console):
-    if not check_system_2_connection_status(FG_Connection_Status_2, DCDC_Connection_Status_2, Cooler_Connection_Status_2):
-        Console.append("❌ Please connect all devices before starting the system.")
-        return
+# def system_2_start(Console):
+#     if not check_system_2_connection_status(FG_Connection_Status_2, DCDC_Connection_Status_2, Cooler_Connection_Status_2):
+#         Console.append("❌ Please connect all devices before starting the system.")
+#         return
 
-    System_2_Loading.setText("System 2 Connection Status: Connected")
-    System_2_Loading.setStyleSheet("color: green; font-family: Arial; font-size: 12px;")
+#     System_2_Loading.setText("System 2 Connection Status: Connected")
+#     System_2_Loading.setStyleSheet("color: green; font-family: Arial; font-size: 12px;")
 
-    try:
-        freq = float(System_2_Freq.text())
-        duty = float(System_2_Duty.text())
-        voltage = float(System_2_Voltage.text())
-        temp = float(System_2_Temp.text())
-        runtime = int(System_2_RunTime.text())
-    except ValueError:
-        Console.append("❌ Invalid input values. Please check the fields.")
-        return
+#     try:
+#         freq = float(System_2_Freq.text())
+#         duty = float(System_2_Duty.text())
+#         voltage = float(System_2_Voltage.text())
+#         temp = float(System_2_Temp.text())
+#         runtime = int(System_2_RunTime.text()) * 60 # in seconds
+#     except ValueError:
+#         Console.append("❌ Invalid input values. Please check the fields.")
+#         return
 
-    Console.append("🚀 System 2 started.")
-    daq_manager.start_pulse(freq, duty)
-    dc_power_controller = DCPowerController(DCDC_COM_Port_2.currentText())
-    dc_power_controller._connect()
-    dc_power_controller.run_voltage_sequence(voltage)
-    cooler = LKLabController(Cooler_COM_Port_2.currentText())
-    cooler._connect()
-    cooler.set_temperature(temp)
+#     Console.append("🚀 System 2 started.")
+#     daq_manager.start_pulse(freq, duty)
+#     dc_power_controller = DCPowerController(DCDC_COM_Port_2.currentText())
+#     dc_power_controller._connect()
+#     dc_power_controller.run_voltage_sequence(voltage)
+#     cooler = LKLabController(Cooler_COM_Port_2.currentText())
+#     cooler._connect()
+#     cooler.set_temperature(temp)
 
-    # Calculate and update System_2_ACTime
-    finish_time = datetime.now() + timedelta(seconds=runtime)
-    System_2_ACTime.setText(finish_time.strftime("%H:%M:%S"))
+#     # Calculate and update System_2_ACTime
+#     finish_time = datetime.now() + timedelta(seconds=runtime)
+#     System_2_ACTime.setText(finish_time.strftime("%H:%M:%S"))
 
-    # Start progress timer
-    System_2_Progress.setValue(0)
-    global progress_timer_2
-    progress_timer_2 = QtCore.QTimer()
-    progress_timer_2.timeout.connect(lambda: update_progress(System_2_Progress, runtime, progress_timer_2, Console))
-    progress_timer_2.start(1000)
+#     # Start progress timer
+#     System_2_Progress.setValue(0)
+#     global progress_timer_2
+#     progress_timer_2 = QtCore.QTimer()
+#     progress_timer_2.timeout.connect(lambda: update_progress(System_2_Progress, runtime, progress_timer_2, Console))
+#     progress_timer_2.start(1000)
+#     System_2_Start.setEnabled(False)
 
 def update_progress(progress_bar, runtime, timer, Console):
-    elapsed_time = progress_bar.value() * runtime / 100
+    elapsed_time = progress_bar.value() * runtime / 100 # progress_bar.value() is in integar value representing percentage
     elapsed_time += 1
     progress_bar.setValue((elapsed_time / runtime) * 100)
     if elapsed_time >= runtime:
         timer.stop()
         Console.append("✅ System completed.")
 
-def system_1_pause(progress_timer, runtime, elapsed_time):
+def system_1_pause(runtime, progress_value):
     if not check_system_1_connection_status(FG_Connection_Status_1, DCDC_Connection_Status_1, Cooler_Connection_Status_1):
         Console.append("❌ System 1 is not running. Please start the system before pausing.")
         return
+    
+    elapsed_time = (progress_value / 100) * runtime
 
     Console.append("⏸ System 1 paused.")
     # Stop the timer for System_1_Progress
-    if progress_timer.isActive():
-        progress_timer.stop()
+    if progress_timer_1.isActive():
+        progress_timer_1.stop()
+    # Stop the pulse output
+
     # Calculate and save the remaining time to System_1_RunTime
     remaining_time = runtime - elapsed_time
     System_1_RunTime.setText(str(remaining_time))
 
-def system_2_pause(progress_timer, runtime, elapsed_time):
-    if not check_system_2_connection_status(FG_Connection_Status_2, DCDC_Connection_Status_2, Cooler_Connection_Status_2):
-        Console.append("❌ System 2 is not running. Please start the system before pausing.")
-        return
+# def system_2_pause(runtime, elapsed_time):
+#     if not check_system_2_connection_status(FG_Connection_Status_2, DCDC_Connection_Status_2, Cooler_Connection_Status_2):
+#         Console.append("❌ System 2 is not running. Please start the system before pausing.")
+#         return
 
-    Console.append("⏸ System 2 paused.")
-    # Stop the timer for System_2_Progress
-    if progress_timer.isActive():
-        progress_timer.stop()
-    # Calculate and save the remaining time to System_2_RunTime
-    remaining_time = runtime - elapsed_time
-    System_2_RunTime.setText(str(remaining_time))
+#     Console.append("⏸ System 2 paused.")
+#     # Stop the timer for System_2_Progress
+#     if progress_timer_2.isActive():
+#         progress_timer_2.stop()
+#     # Calculate and save the remaining time to System_2_RunTime
+#     remaining_time = runtime - elapsed_time
+#     System_2_RunTime.setText(str(remaining_time))
 
 def system_1_stop(combo_box, Console):
     
@@ -369,58 +306,58 @@ def system_1_stop(combo_box, Console):
     System_1_Progress.setValue(0)
     Console.append("⛔ System 1 stopped.")
 
-def system_2_stop():
+# def system_2_stop():
     
-    # Get the unique_id from FG_Device_Number_2
-    unique_id = FG_Device_Number_2.currentText()
-    if not unique_id:
-        Console.append("❌ No device selected in FG_Device_Number_2.")
-        return
+#     # Get the unique_id from FG_Device_Number_2
+#     unique_id = FG_Device_Number_2.currentText()
+#     if not unique_id:
+#         Console.append("❌ No device selected in FG_Device_Number_2.")
+#         return
 
-    # Find the board_num associated with the unique_id
-    matching_devices = [
-        device for device in daq_manager.list_devices()
-        if device["unique_id"] == unique_id
-    ]
-    if not matching_devices:
-        Console.append(f"❌ No matching device found for unique_id: {unique_id}")
-        return
+#     # Find the board_num associated with the unique_id
+#     matching_devices = [
+#         device for device in daq_manager.list_devices()
+#         if device["unique_id"] == unique_id
+#     ]
+#     if not matching_devices:
+#         Console.append(f"❌ No matching device found for unique_id: {unique_id}")
+#         return
 
-    board_num = matching_devices[0]["board_num"]
+#     board_num = matching_devices[0]["board_num"]
 
-    # Initialize the MCCDAQ instance for the specific board_num
-    mcc_daq = MCCDAQ(board_num=board_num)
+#     # Initialize the MCCDAQ instance for the specific board_num
+#     mcc_daq = MCCDAQ(board_num=board_num)
 
-    # Stop the pulse output on the specific timer_channel
-    try:
-        timer_channel = mcc_daq.first_chan_num  # Use the first available channel
-        mcc_daq.stop(timer_channel=timer_channel)
-        Console.append(f"✅ Stopped pulse output on DAQ device with unique_id: {unique_id} (Board {board_num}, Channel {timer_channel})")
-    except Exception as e:
-        Console.append(f"❌ Failed to stop pulse output on DAQ device with unique_id: {unique_id}: {e}")
+#     # Stop the pulse output on the specific timer_channel
+#     try:
+#         timer_channel = mcc_daq.last_chan_num  # Use the second available channel
+#         mcc_daq.stop(timer_channel=timer_channel)
+#         Console.append(f"✅ Stopped pulse output on DAQ device with unique_id: {unique_id} (Board {board_num}, Channel {timer_channel})")
+#     except Exception as e:
+#         Console.append(f"❌ Failed to stop pulse output on DAQ device with unique_id: {unique_id}: {e}")
 
-    # Stop the DC Power Controller
-    dc_power_controller = DCPowerController(DCDC_COM_Port_2.currentText())
-    try:
-        dc_power_controller._connect()
-        dc_power_controller.stop()
-        Console.append(f"✅ Stopped DC Power Controller on {DCDC_COM_Port_2.currentText()}")
-    except Exception as e:
-        Console.append(f"❌ Failed to stop DC Power Controller: {e}")
+#     # Stop the DC Power Controller
+#     dc_power_controller = DCPowerController(DCDC_COM_Port_2.currentText())
+#     try:
+#         dc_power_controller._connect()
+#         dc_power_controller.stop()
+#         Console.append(f"✅ Stopped DC Power Controller on {DCDC_COM_Port_2.currentText()}")
+#     except Exception as e:
+#         Console.append(f"❌ Failed to stop DC Power Controller: {e}")
 
-    # Stop the Cooler
-    cooler = LKLabController(Cooler_COM_Port_2.currentText())
-    try:
-        cooler._connect()
-        cooler.turn_off_operation()
-        Console.append(f"✅ Stopped Cooler on {Cooler_COM_Port_2.currentText()}")
-    except Exception as e:
-        Console.append(f"❌ Failed to stop Cooler: {e}")
+#     # Stop the Cooler
+#     cooler = LKLabController(Cooler_COM_Port_2.currentText())
+#     try:
+#         cooler._connect()
+#         cooler.turn_off_operation()
+#         Console.append(f"✅ Stopped Cooler on {Cooler_COM_Port_2.currentText()}")
+#     except Exception as e:
+#         Console.append(f"❌ Failed to stop Cooler: {e}")
 
-    # Reset System_2_RunTime and System_2_Progress
-    System_2_RunTime.setText("0")
-    System_2_Progress.setValue(0)
-    Console.append("⛔ System 2 stopped.")
+#     # Reset System_2_RunTime and System_2_Progress
+#     System_2_RunTime.setText("0")
+#     System_2_Progress.setValue(0)
+#     Console.append("⛔ System 2 stopped.")
 
 
 if __name__ == "__main__":
@@ -440,6 +377,8 @@ if __name__ == "__main__":
     FG_Connection_Status_1 = window.FG_Connection_Status_1
     FG_Connection_Status_2 = window.FG_Connection_Status_2
 
+    DCDC_Device_1 = window.DCDC_Device_1
+    DCDC_Device_2 = window.DCDC_Device_2
     DCDC_COM_Port_1 = window.DCDC_COM_Port_1
     DCDC_COM_Port_2 = window.DCDC_COM_Port_2
     DCDC_BaudRate_1 = window.DCDC_BaudRate_1
@@ -447,8 +386,7 @@ if __name__ == "__main__":
 
     DCDC_Connect_1 = window.DCDC_Connect_1
     DCDC_Connect_2 = window.DCDC_Connect_2
-    DCDC_AutoConnect_1 = window.DCDC_AutoConnect_1
-    DCDC_AutoConnect_2 = window.DCDC_AutoConnect_2
+    
 
     DCDC_Connection_Status_1 = window.DCDC_Connection_Status_1
     DCDC_Connection_Status_2 = window.DCDC_Connection_Status_2
@@ -460,8 +398,6 @@ if __name__ == "__main__":
 
     Cooler_Connect_1 = window.Cooler_Connect_1
     Cooler_Connect_2 = window.Cooler_Connect_2
-    Cooler_AutoConnect_1 = window.Cooler_AutoConnect_1
-    Cooler_AutoConnect_2 = window.Cooler_AutoConnect_2
 
     Cooler_Connection_Status_1 = window.Cooler_Connection_Status_1
     Cooler_Connection_Status_2 = window.Cooler_Connection_Status_2
@@ -503,44 +439,30 @@ if __name__ == "__main__":
 
 
     FG_Refresh_1.clicked.connect(lambda: refresh_FG_devices(FG_Device_Number_1, Console))
-    FG_Refresh_2.clicked.connect(lambda: refresh_FG_devices(FG_Device_Number_2, Console))
+    # FG_Refresh_2.clicked.connect(lambda: refresh_FG_devices(FG_Device_Number_2, Console))
 
     FG_Connect_1.clicked.connect(lambda: connect_fg_device(FG_Device_Number_1, FG_Connection_Status_1, Console))
-    FG_Connect_2.clicked.connect(lambda: connect_fg_device(FG_Device_Number_2, FG_Connection_Status_2, Console))
+    # FG_Connect_2.clicked.connect(lambda: connect_fg_device(FG_Device_Number_2, FG_Connection_Status_2, Console))
 
     FG_Find_Device_1.clicked.connect(lambda: flash_led_on_device(FG_Device_Number_1, Console))
-    FG_Find_Device_2.clicked.connect(lambda: flash_led_on_device(FG_Device_Number_2, Console))
+    # FG_Find_Device_2.clicked.connect(lambda: flash_led_on_device(FG_Device_Number_2, Console))
 
-    DCDC_Connect_1.clicked.connect(lambda: connect_dc_power_controller(DCDC_COM_Port_1, DCDC_BaudRate_1, DCDC_Connection_Status_1, Console))
-    DCDC_Connect_2.clicked.connect(lambda: connect_dc_power_controller(DCDC_COM_Port_2, DCDC_BaudRate_2, DCDC_Connection_Status_2, Console))
-
-    DCDC_AutoConnect_1.clicked.connect(lambda: auto_connect_dc_power_controller(DCDC_COM_Port_1, DCDC_COM_Port_2, DCDC_BaudRate_1, DCDC_Connection_Status_1, DCDC_Connection_Status_2, Console))
-    DCDC_AutoConnect_2.clicked.connect(lambda: auto_connect_dc_power_controller(DCDC_COM_Port_2, DCDC_COM_Port_1, DCDC_BaudRate_2, DCDC_Connection_Status_2, DCDC_Connection_Status_1, Console))
+    DCDC_Connect_1.clicked.connect(lambda: connect_dc_power_controller(DCDC_Device_1, DCDC_COM_Port_1, DCDC_BaudRate_1, DCDC_Connection_Status_1, Console))
+    # DCDC_Connect_2.clicked.connect(lambda: connect_dc_power_controller(DCDC_Device_2, DCDC_COM_Port_2, DCDC_BaudRate_2, DCDC_Connection_Status_2, Console))
 
     Cooler_Connect_1.clicked.connect(lambda: connect_cooler(Cooler_COM_Port_1, Cooler_BaudRate_1, Cooler_Connection_Status_1, Console))
-    Cooler_Connect_2.clicked.connect(lambda: connect_cooler(Cooler_COM_Port_2, Cooler_BaudRate_2, Cooler_Connection_Status_2, Console))
-
-    Cooler_AutoConnect_1.clicked.connect(lambda: auto_connect_cooler(Cooler_COM_Port_1, Cooler_COM_Port_2, Cooler_BaudRate_1, Cooler_Connection_Status_1, Cooler_Connection_Status_2, Console))
-    Cooler_AutoConnect_2.clicked.connect(lambda: auto_connect_cooler(Cooler_COM_Port_2, Cooler_COM_Port_1, Cooler_BaudRate_2, Cooler_Connection_Status_2, Cooler_Connection_Status_1, Console))
+    # Cooler_Connect_2.clicked.connect(lambda: connect_cooler(Cooler_COM_Port_2, Cooler_BaudRate_2, Cooler_Connection_Status_2, Console))
 
     System_1_Start.clicked.connect(lambda: system_1_start(Console))
-    System_2_Start.clicked.connect(lambda: system_2_start(Console))
+    # System_2_Start.clicked.connect(lambda: system_2_start(Console))
 
-    System_1_Pause.clicked.connect(lambda: system_1_pause(
-        System_1_Progress, 
-        int(System_1_RunTime.text()) if System_1_RunTime.text().isdigit() else 0, 
-        System_1_Progress.value()
-    ))
-    System_2_Pause.clicked.connect(lambda: system_2_pause(
-        System_2_Progress, 
-        int(System_2_RunTime.text()) if System_2_RunTime.text().isdigit() else 0, 
-        System_2_Progress.value()
-    ))
+    System_1_Pause.clicked.connect(lambda: system_1_pause())
+    # System_2_Pause.clicked.connect(lambda: system_2_pause())
 
     System_1_Stop.clicked.connect(lambda: system_1_stop(FG_Device_Number_1, Console))
-    System_2_Stop.clicked.connect(lambda: system_2_stop())
+    # System_2_Stop.clicked.connect(lambda: system_2_stop())
 
-    daq_manager = MCCDAQManager()
+    
 
     window.show()
     sys.exit(app.exec_())

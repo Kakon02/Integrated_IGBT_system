@@ -721,13 +721,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QPushButton" name="Cooler_AutoConnect_2">
-           <property name="text">
-            <string>Auto Connect</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
        <item row="2" column="0">
@@ -736,13 +729,6 @@
           <widget class="QPushButton" name="DCDC_Connect_2">
            <property name="text">
             <string>Connect</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="DCDC_AutoConnect_2">
-           <property name="text">
-            <string>Auto Connect</string>
            </property>
           </widget>
          </item>
@@ -921,6 +907,23 @@
        </item>
        <item row="1" column="2">
         <layout class="QVBoxLayout" name="verticalLayout_11">
+         <item>
+          <widget class="QComboBox" name="DCDC_Devices_1">
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>EX300-12</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>DC61802F</string>
+            </property>
+           </item>
+          </widget>
+         </item>
          <item>
           <widget class="QComboBox" name="DCDC_COM_Port_1">
            <property name="editable">
@@ -1321,6 +1324,23 @@
        <item row="1" column="2">
         <layout class="QVBoxLayout" name="verticalLayout_18">
          <item>
+          <widget class="QComboBox" name="DCDC_Devices_2">
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>EX300-12</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>DC61802F</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
           <widget class="QComboBox" name="DCDC_COM_Port_2">
            <property name="editable">
             <bool>false</bool>
@@ -1387,13 +1407,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QPushButton" name="Cooler_AutoConnect_1">
-           <property name="text">
-            <string>Auto Connect</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
        <item row="2" column="0">
@@ -1402,13 +1415,6 @@
           <widget class="QPushButton" name="DCDC_Connect_1">
            <property name="text">
             <string>Connect</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="DCDC_AutoConnect_1">
-           <property name="text">
-            <string>Auto Connect</string>
            </property>
           </widget>
          </item>

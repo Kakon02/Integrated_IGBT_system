@@ -52,18 +52,17 @@ class EX300_12:
         except Exception as e:
             raise RuntimeError(f"❌ Failed to connect to {port}: {e}")
 
-    def _auto_connect(self):
-        """Automatically scan and connect to an available port."""
-        ports = serial.tools.list_ports.comports()
-        for port in ports:
-            try:
-                time.sleep(0.2)
-                self._connect_to_port(port.device)
-                return
-            except RuntimeError:
-                continue
-
-        raise RuntimeError("❌ EX300-12 device not found on any COM port.")
+    # def _auto_connect(self):
+    #     """Automatically scan and connect to an available port."""
+    #     ports = serial.tools.list_ports.comports()
+    #     for port in ports:
+    #         try:
+    #             time.sleep(0.2)
+    #             self._connect_to_port(port.device)
+    #             return
+    #         except RuntimeError:
+    #             continue
+        # raise RuntimeError("❌ EX300-12 device not found on any COM port.")
 
     def _is_valid_voltage(self, response: str) -> bool:
         """Check if the response is a valid voltage."""
@@ -73,7 +72,7 @@ class EX300_12:
         except ValueError:
             return False
 
-    def get_auto_connection_info(self):
+    def get_connection_info(self):
         return {"port": self.port_name, "baud_rate": self.baud_rate}
 
     def send_command(self, cmd: str, delay: float = 0.1):

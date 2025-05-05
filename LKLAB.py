@@ -1,6 +1,5 @@
 import serial
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
-from serial.tools import list_ports
 import time
 
 class LKLabController:
@@ -10,14 +9,12 @@ class LKLabController:
         self.baudrate = baudrate
         self.slave_id = slave_id
         self.timeout = timeout
-        self.operation_value = False
-
-        # Automatically connect to the device on initialization
-        # self._auto_connect()
+        self._connection = False
+        self._operation = False
 
     def _connect(self):
-        try:
-            client = ModbusClient(
+
+        client = ModbusClient(
                 method='rtu',
                 port=self.port,
                 baudrate=self.baudrate,
@@ -25,71 +22,34 @@ class LKLabController:
                 bytesize=8,
                 stopbits=1,
                 timeout=self.timeout
-            )
-            if client.connect():
+        )
+        if client.connect():
                 result = client.read_holding_registers(9, 1, unit=self.slave_id)
                 if not result.isError():
                     self.client = client
-                    self._update_operation_state()
                     print(f"✅ Connected to LKLAB device on {self.port}")
-                    return
+                    self._connection = True
                 else:
                     client.close()
+                    self._connection = False
                     raise IOError("Failed to read holding register.")
-        except Exception as e:
-            if client:
-                client.close()
-            raise ConnectionError(f"Failed to connect to LKLAB device on {self.port}: {e}")
-
-    def _auto_connect(self):
-        """Automatically connect to the LKLAB device by scanning available ports."""
-        ports = [p.device for p in list_ports.comports()]  # Get a list of available ports
-        for port_name in ports:
-            try:
-                # Attempt to connect to the port
-                client = ModbusClient(
-                    method='rtu',
-                    port=port_name,
-                    baudrate=self.baudrate,
-                    parity=serial.PARITY_EVEN,
-                    bytesize=8,
-                    stopbits=1,
-                    timeout=self.timeout
-                )
-                if client.connect():
-                    # Verify the connection by reading a known register
-                    result = client.read_holding_registers(9, 1, unit=self.slave_id)
-                    if not result.isError():
-                        # Successfully connected
-                        self.client = client
-                        self.port = port_name
-                        self._update_operation_state()
-                        print(f"✅ Connected to LKLAB device on {port_name}")
-                        return
-                    else:
-                        client.close()
-            except Exception as e:
-                raise ConnectionError(f"Failed to connect on {port_name}") from e
-
-        raise RuntimeError("No compatible LKLAB device found on available ports.")
-
-    def _update_operation_state(self):
-        """Update the operation state of the device."""
-        result = self.client.read_holding_registers(9, 1, unit=self.slave_id)
-        if result.isError():
-            raise IOError("Failed to read operation state.")
-        self.operation_value = result.registers[0] != 0
+        
 
     def get_temperatures(self):
         """Get the current and setpoint temperatures."""
-        if self.client is None:
+                
+        if self._connection:
+            npv = self.client.read_holding_registers(1, 1, unit=self.slave_id)
+            nsv = self.client.read_holding_registers(2, 1, unit=self.slave_id)
+            npv_value = self._convert_temp(npv.registers[0])
+            nsv_value = self._convert_temp(nsv.registers[0])
+            return {"current": npv_value, "setpoint": nsv_value}
+        
+        else:
             print("🔄 Attempting to reconnect...")
             self._connect()  # Attempt to reconnect if client is None
-        npv = self.client.read_holding_registers(1, 1, unit=self.slave_id)
-        nsv = self.client.read_holding_registers(2, 1, unit=self.slave_id)
-        npv_value = self._convert_temp(npv.registers[0])
-        nsv_value = self._convert_temp(nsv.registers[0])
-        return {"current": npv_value, "setpoint": nsv_value}
+        
+        
 
     def _convert_temp(self, raw):
         """Convert raw temperature data to Celsius."""
@@ -99,27 +59,38 @@ class LKLabController:
 
     def set_temperature(self, temp_celsius):
         """Set the target temperature."""
-        val = int(temp_celsius * 100)
-        if val < 0:
-            val += 65536
-        self.client.write_register(21, val, unit=self.slave_id)
+        if self._connection:
+            val = int(temp_celsius * 100)
+            if val < 0:
+                val += 65536
+            self.client.write_register(21, val, unit=self.slave_id)
+        else:
+            print("🔄 Attempting to reconnect...")
+            self._connect()
+
 
     def adjust_temperature(self, delta):
         """Adjust the temperature by a delta value."""
-        nsv = self.client.read_holding_registers(2, 1, unit=self.slave_id)
-        current_val = nsv.registers[0]
-        adjusted_val = (current_val + int(delta * 100)) % 65536
-        self.client.write_register(21, adjusted_val, unit=self.slave_id)
+        if self._connection:
+            nsv = self.client.read_holding_registers(2, 1, unit=self.slave_id)
+            current_val = nsv.registers[0]
+            adjusted_val = (current_val + int(delta * 100)) % 65536
+            self.client.write_register(21, adjusted_val, unit=self.slave_id)
+        else:
+            print("🔄 Attempting to reconnect...")
+            self._connect()
 
     def turn_on_operation(self):
         """Turn on the operation."""
-        self.client.write_register(25, 1, unit=self.slave_id)
-        self.operation_value = True
+        if not self._operation:
+            self.client.write_register(25, 1, unit=self.slave_id)
+            self._operation = True
 
     def turn_off_operation(self):
         """Turn off the operation."""
-        self.client.write_register(25, 1, unit=self.slave_id)
-        self.operation_value = False
+        if self._operation:
+            self.client.write_register(25, 1, unit=self.slave_id)
+            self._operation = False
 
     def close(self):
         """Close the Modbus connection."""
