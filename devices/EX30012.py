@@ -4,8 +4,7 @@ import serial.tools.list_ports
 import logging
 from typing import Optional
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
+logging.getLogger(__name__)
 
 class EX300_12:
     def __init__(self, port: Optional[str] = None, baud_rate: int = 9600, timeout: int = 3000):
@@ -16,7 +15,7 @@ class EX300_12:
         self.timeout = timeout
 
 
-    def _configure_instrument(self, inst):
+    def configure_instrument(self, inst):
         """Configure the instrument with standard settings."""
         inst.baud_rate = self.baud_rate
         inst.data_bits = 8
@@ -27,7 +26,7 @@ class EX300_12:
         inst.write_termination = '\n'
         inst.read_termination = '\n'
 
-    def _probe_device(self, inst):
+    def probe_device(self, inst):
         """Probe the device to check if it's a valid EX300-12."""
         try:
             response = inst.query('meas:volt?').strip()
@@ -35,7 +34,7 @@ class EX300_12:
         except Exception:
             return False
 
-    def _connect_to_port(self, port: str):
+    def connect_to_port(self, port: str):
         """Attempt to connect to a specific port."""
         try:
             com_str = port.replace("COM", "")
@@ -64,7 +63,7 @@ class EX300_12:
     #             continue
         # raise RuntimeError("❌ EX300-12 device not found on any COM port.")
 
-    def _is_valid_voltage(self, response: str) -> bool:
+    def is_valid_voltage(self, response: str) -> bool:
         """Check if the response is a valid voltage."""
         try:
             float(response)

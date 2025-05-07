@@ -1,6 +1,9 @@
 import serial
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 import time
+import logging
+
+logging.getLogger(__name__)
 
 class LKLabController:
     def __init__(self, port: str = None, baudrate=9600, slave_id=1, timeout=1):

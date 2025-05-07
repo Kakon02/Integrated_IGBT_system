@@ -3,8 +3,8 @@ from devices.EX30012 import EX300_12
 from devices.LKLAB import LKLabController
 from devices.MCCDAQ import MCCDAQManager, MCCDAQ
 from view.main_window import MainWindow
+from controllers.system_controller import SystemController
 import sys
-import serial
 from datetime import datetime, timedelta
 
 

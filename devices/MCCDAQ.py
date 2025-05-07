@@ -1,18 +1,24 @@
-# pulse_output.py
-
+# Function Generator Controller
 from mcculw import ul
 from mcculw.enums import CounterChannelType, InterfaceType
 from mcculw.device_info import DaqDeviceInfo
 from mcculw.ul import ULError
+import logging
+
+logging.getLogger(__name__)
 
 class MCCDAQManager:
+    # Scanning all devices
+    # Managing multiple boards
+    # Device discovery and release
+
     def __init__(self):
         ul.ignore_instacal()
         self.devices = []
         self.board_map = {}  # Maps board_num to descriptor
-        self._discover_devices()
+        self.discover_devices()
 
-    def _discover_devices(self):
+    def discover_devices(self):
         self.devices = ul.get_daq_device_inventory(InterfaceType.ANY)
         for i, descriptor in enumerate(self.devices):
             try:
@@ -51,7 +57,9 @@ class MCCDAQManager:
 
 
 class MCCDAQ:
-    def __init__(self, board_num=0, auto_detect=True):
+    # Controlling a specific board number (pulse output, stop, etc.)
+    
+    def __init__(self, board_num=0, auto_detect=False):
         self.board_num = board_num
         self.first_chan_num = -1
         self.last_chan_num = -1

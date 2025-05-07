@@ -1,12 +1,13 @@
 # dc_power_controller.py
-
 import serial
 import time
 from serial.tools import list_ports  # Import list_ports for serial port detection
 from typing import Optional
+import logging
 
+logging.getLogger(__name__)
 
-class DCPowerController:
+class DC61802F:
     def __init__(self, port: Optional[str] = None, baudrate=38400, timeout=1):
         self.serial = None
         self.port = port
