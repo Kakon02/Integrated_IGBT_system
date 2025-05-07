@@ -1,23 +1,15 @@
-from DC61802F import DCPowerController
-from EX30012 import EX300_12
-from LKLAB import LKLabController
-from MCCDAQ import MCCDAQManager, MCCDAQ
-from PyQt5 import uic, QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from devices.DC61802F import DCPowerController
+from devices.EX30012 import EX300_12
+from devices.LKLAB import LKLabController
+from devices.MCCDAQ import MCCDAQManager, MCCDAQ
+from view.main_window import MainWindow
 import sys
 import serial
 from datetime import datetime, timedelta
 
 
-# Load the UI file
-port_settings_ui = uic.loadUiType("port_settings.ui")[0]
 
 daq_manager = MCCDAQManager()
-
-class PortSettingsApp(QMainWindow, port_settings_ui):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
 
 def refresh_FG_devices(combo_box, console): #FG stands for Function Generator
     devices = daq_manager.list_devices()
@@ -364,76 +356,76 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = PortSettingsApp()
 
-    FG_Device_Number_1 = window.FG_Device_Number_1
-    FG_Device_Number_2 = window.FG_Device_Number_2
-    FG_Find_Device_1 = window.FG_Find_Device_1
-    FG_Find_Device_2 = window.FG_Find_Device_2
+    # FG_Device_Number_1 = window.FG_Device_Number_1
+    # FG_Device_Number_2 = window.FG_Device_Number_2
+    # FG_Find_Device_1 = window.FG_Find_Device_1
+    # FG_Find_Device_2 = window.FG_Find_Device_2
 
-    FG_Connect_1 = window.FG_Connect_1
-    FG_Connect_2 = window.FG_Connect_2
-    FG_Refresh_1 = window.FG_Refresh_1
-    FG_Refresh_2 = window.FG_Refresh_2
+    # FG_Connect_1 = window.FG_Connect_1
+    # FG_Connect_2 = window.FG_Connect_2
+    # FG_Refresh_1 = window.FG_Refresh_1
+    # FG_Refresh_2 = window.FG_Refresh_2
 
-    FG_Connection_Status_1 = window.FG_Connection_Status_1
-    FG_Connection_Status_2 = window.FG_Connection_Status_2
+    # FG_Connection_Status_1 = window.FG_Connection_Status_1
+    # FG_Connection_Status_2 = window.FG_Connection_Status_2
 
-    DCDC_Device_1 = window.DCDC_Device_1
-    DCDC_Device_2 = window.DCDC_Device_2
-    DCDC_COM_Port_1 = window.DCDC_COM_Port_1
-    DCDC_COM_Port_2 = window.DCDC_COM_Port_2
-    DCDC_BaudRate_1 = window.DCDC_BaudRate_1
-    DCDC_BaudRate_2 = window.DCDC_BaudRate_2
+    # DCDC_Device_1 = window.DCDC_Devices_1
+    # DCDC_Device_2 = window.DCDC_Devices_2
+    # DCDC_COM_Port_1 = window.DCDC_COM_Port_1
+    # DCDC_COM_Port_2 = window.DCDC_COM_Port_2
+    # DCDC_BaudRate_1 = window.DCDC_BaudRate_1
+    # DCDC_BaudRate_2 = window.DCDC_BaudRate_2
 
-    DCDC_Connect_1 = window.DCDC_Connect_1
-    DCDC_Connect_2 = window.DCDC_Connect_2
+    # DCDC_Connect_1 = window.DCDC_Connect_1
+    # DCDC_Connect_2 = window.DCDC_Connect_2
     
 
-    DCDC_Connection_Status_1 = window.DCDC_Connection_Status_1
-    DCDC_Connection_Status_2 = window.DCDC_Connection_Status_2
+    # DCDC_Connection_Status_1 = window.DCDC_Connection_Status_1
+    # DCDC_Connection_Status_2 = window.DCDC_Connection_Status_2
 
-    Cooler_COM_Port_1 = window.Cooler_COM_Port_1
-    Cooler_COM_Port_2 = window.Cooler_COM_Port_2
-    Cooler_BaudRate_1 = window.Cooler_BaudRate_1
-    Cooler_BaudRate_2 = window.Cooler_BaudRate_2
+    # Cooler_COM_Port_1 = window.Cooler_COM_Port_1
+    # Cooler_COM_Port_2 = window.Cooler_COM_Port_2
+    # Cooler_BaudRate_1 = window.Cooler_BaudRate_1
+    # Cooler_BaudRate_2 = window.Cooler_BaudRate_2
 
-    Cooler_Connect_1 = window.Cooler_Connect_1
-    Cooler_Connect_2 = window.Cooler_Connect_2
+    # Cooler_Connect_1 = window.Cooler_Connect_1
+    # Cooler_Connect_2 = window.Cooler_Connect_2
 
-    Cooler_Connection_Status_1 = window.Cooler_Connection_Status_1
-    Cooler_Connection_Status_2 = window.Cooler_Connection_Status_2
+    # Cooler_Connection_Status_1 = window.Cooler_Connection_Status_1
+    # Cooler_Connection_Status_2 = window.Cooler_Connection_Status_2
 
-    System_1_Freq = window.System_1_Freq
-    System_1_Freq_unit = window.System_1_Freq_unit
-    System_1_Duty = window.System_1_Duty
-    System_1_Voltage = window.System_1_Voltage
-    System_1_Voltage_unit = window.System_1_Voltage_unit
-    System_1_Temp = window.System_1_Temp
-    System_1_RunTime = window.System_1_RunTime
-    System_1_ACTime = window.System_1_ACTime
-    System_1_Progress = window.System_1_Progress
-    System_1_Loading = window.System_1_Loading
+    # System_1_Freq = window.System_1_Freq
+    # System_1_Freq_unit = window.System_1_Freq_unit
+    # System_1_Duty = window.System_1_Duty
+    # System_1_Voltage = window.System_1_Voltage
+    # System_1_Voltage_unit = window.System_1_Voltage_unit
+    # System_1_Temp = window.System_1_Temp
+    # System_1_RunTime = window.System_1_RunTime
+    # System_1_ACTime = window.System_1_ACTime
+    # System_1_Progress = window.System_1_Progress
+    # System_1_Loading = window.System_1_Loading
 
-    System_2_Freq = window.System_2_Freq
-    System_2_Freq_unit = window.System_2_Freq_unit
-    System_2_Duty = window.System_2_Duty
-    System_2_Voltage = window.System_2_Voltage
-    System_2_Voltage_unit = window.System_2_Voltage_unit
-    System_2_Temp = window.System_2_Temp
-    System_2_RunTime = window.System_2_RunTime
-    System_2_ACTime = window.System_2_ACTime
-    System_2_Progress = window.System_2_Progress
-    System_2_Loading = window.System_2_Loading
+    # System_2_Freq = window.System_2_Freq
+    # System_2_Freq_unit = window.System_2_Freq_unit
+    # System_2_Duty = window.System_2_Duty
+    # System_2_Voltage = window.System_2_Voltage
+    # System_2_Voltage_unit = window.System_2_Voltage_unit
+    # System_2_Temp = window.System_2_Temp
+    # System_2_RunTime = window.System_2_RunTime
+    # System_2_ACTime = window.System_2_ACTime
+    # System_2_Progress = window.System_2_Progress
+    # System_2_Loading = window.System_2_Loading
 
-    System_1_Start = window.System_1_Start
-    System_1_Pause = window.System_1_Pause
-    System_1_Stop = window.System_1_Stop
+    # System_1_Start = window.System_1_Start
+    # System_1_Pause = window.System_1_Pause
+    # System_1_Stop = window.System_1_Stop
 
-    System_2_Start = window.System_2_Start
-    System_2_Pause = window.System_2_Pause
-    System_2_Stop = window.System_2_Stop
+    # System_2_Start = window.System_2_Start
+    # System_2_Pause = window.System_2_Pause
+    # System_2_Stop = window.System_2_Stop
 
 
-    Console = window.Console
+    # Console = window.Console
 
     
 

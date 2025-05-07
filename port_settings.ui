@@ -34,7 +34,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -716,6 +716,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_12">
          <item>
           <widget class="QPushButton" name="Cooler_Connect_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Connect</string>
            </property>
@@ -727,6 +733,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_13">
          <item>
           <widget class="QPushButton" name="DCDC_Connect_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Connect</string>
            </property>
@@ -738,6 +750,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_14">
          <item>
           <widget class="QPushButton" name="FG_Connect_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Connect</string>
            </property>
@@ -745,6 +763,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="FG_Refresh_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Refresh</string>
            </property>
@@ -855,6 +879,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
           <widget class="QComboBox" name="FG_Device_Number_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="editable">
             <bool>false</bool>
            </property>
@@ -862,6 +892,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="FG_Find_Device_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Flash Led</string>
            </property>
@@ -909,6 +945,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_11">
          <item>
           <widget class="QComboBox" name="DCDC_Devices_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="editable">
             <bool>false</bool>
            </property>
@@ -926,6 +968,12 @@
          </item>
          <item>
           <widget class="QComboBox" name="DCDC_COM_Port_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="editable">
             <bool>false</bool>
            </property>
@@ -963,6 +1011,12 @@
          </item>
          <item>
           <widget class="QLineEdit" name="DCDC_BaudRate_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>38400</string>
            </property>
@@ -1049,6 +1103,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QComboBox" name="Cooler_COM_Port_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="editable">
             <bool>false</bool>
            </property>
@@ -1086,6 +1146,12 @@
          </item>
          <item>
           <widget class="QLineEdit" name="Cooler_BaudRate_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>9600</string>
            </property>
@@ -1148,6 +1214,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_20">
          <item>
           <widget class="QComboBox" name="Cooler_COM_Port_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="editable">
             <bool>false</bool>
            </property>
@@ -1185,6 +1257,12 @@
          </item>
          <item>
           <widget class="QLineEdit" name="Cooler_BaudRate_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>9600</string>
            </property>
@@ -1271,6 +1349,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_16">
          <item>
           <widget class="QComboBox" name="FG_Device_Number_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="editable">
             <bool>false</bool>
            </property>
@@ -1278,6 +1362,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="FG_Find_Device_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Flash Led</string>
            </property>
@@ -1325,6 +1415,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_18">
          <item>
           <widget class="QComboBox" name="DCDC_Devices_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="editable">
             <bool>false</bool>
            </property>
@@ -1342,6 +1438,12 @@
          </item>
          <item>
           <widget class="QComboBox" name="DCDC_COM_Port_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="editable">
             <bool>false</bool>
            </property>
@@ -1379,6 +1481,12 @@
          </item>
          <item>
           <widget class="QLineEdit" name="DCDC_BaudRate_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>38400</string>
            </property>
@@ -1402,6 +1510,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QPushButton" name="Cooler_Connect_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Connect</string>
            </property>
@@ -1413,6 +1527,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
           <widget class="QPushButton" name="DCDC_Connect_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Connect</string>
            </property>
@@ -1424,6 +1544,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
           <widget class="QPushButton" name="FG_Connect_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Connect</string>
            </property>
@@ -1431,6 +1557,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="FG_Refresh_1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Refresh</string>
            </property>
