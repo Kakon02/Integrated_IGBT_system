@@ -18,9 +18,9 @@ class DC61802F:
 
         # self._auto_connect()
     
-    def _connect(self):
+    def connect_to_port(self, port):
         ser = serial.Serial(
-            port=self.port,
+            port=port,
             baudrate=self.baudrate,
             bytesize=serial.EIGHTBITS,
             parity=serial.PARITY_NONE,
@@ -34,34 +34,35 @@ class DC61802F:
             return
         else:
             ser.close()
+            self.connected = False
             raise RuntimeError("❌ No compatible DC power supply found.")
         
 
 
-    def _auto_connect(self):
-        ports = [p.device for p in list_ports.comports()]  # Use list_ports.comports()
-        for port_name in ports:
-            try:
-                ser = serial.Serial(
-                    port=port_name,
-                    baudrate=self.baudrate,
-                    bytesize=serial.EIGHTBITS,
-                    parity=serial.PARITY_NONE,
-                    stopbits=serial.STOPBITS_ONE,
-                    timeout=self.timeout
-                )
-                self.serial = ser
-                self.port = port_name
-                time.sleep(0.2)
-                if self._identify_model():
-                    self.connected = True
-                    print(f"✅ Connected to DC Power Supply: {self.model} on {port_name}")
-                    return
-                else:
-                    ser.close()
-            except Exception:
-                continue
-        raise RuntimeError("❌ No compatible DC power supply found.")
+    # def _auto_connect(self):
+    #     ports = [p.device for p in list_ports.comports()]  # Use list_ports.comports()
+    #     for port_name in ports:
+    #         try:
+    #             ser = serial.Serial(
+    #                 port=port_name,
+    #                 baudrate=self.baudrate,
+    #                 bytesize=serial.EIGHTBITS,
+    #                 parity=serial.PARITY_NONE,
+    #                 stopbits=serial.STOPBITS_ONE,
+    #                 timeout=self.timeout
+    #             )
+    #             self.serial = ser
+    #             self.port = port_name
+    #             time.sleep(0.2)
+    #             if self._identify_model():
+    #                 self.connected = True
+    #                 print(f"✅ Connected to DC Power Supply: {self.model} on {port_name}")
+    #                 return
+    #             else:
+    #                 ser.close()
+    #         except Exception:
+    #             continue
+    #     raise RuntimeError("❌ No compatible DC power supply found.")
 
     def _identify_model(self):
         self._send_bytes([0x7B, 0x00, 0x08, 0x01, 0xF0, 0x0C, 0x05, 0x7D])
@@ -129,7 +130,7 @@ class DC61802F:
         self.start()
 
 
-    def get_auto_connection_info(self):
+    def get_connection_info(self):
         """Get connection information."""
         return {"port": self.port, "baudrate": self.baudrate, "model": self.model}
 

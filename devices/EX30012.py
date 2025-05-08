@@ -13,6 +13,7 @@ class EX300_12:
         self.port_name = port
         self.baud_rate = baud_rate
         self.timeout = timeout
+        self.connected = False
 
 
     def configure_instrument(self, inst):
@@ -44,12 +45,13 @@ class EX300_12:
             if self._probe_device(inst):
                 self.instrument = inst
                 self.port_name = port
+                self.connected = True
                 logging.info(f"✅ Connected to EX300-12 on {self.port_name}")
             else:
                 inst.close()
-                raise RuntimeError(f"❌ Device on {port} is not a valid EX300-12.")
+                self.connected = False
         except Exception as e:
-            raise RuntimeError(f"❌ Failed to connect to {port}: {e}")
+            self.connected = False
 
     # def _auto_connect(self):
     #     """Automatically scan and connect to an available port."""
@@ -82,10 +84,10 @@ class EX300_12:
         time.sleep(delay)
         return self.instrument.query(cmd).strip()
 
-    def turn_on(self):
+    def run_voltage_sequence(self):
         self.send_command('outp on')
 
-    def turn_off(self):
+    def stop(self):
         self.send_command('outp off')
 
     def set_voltage(self, value: float):

@@ -10,9 +10,8 @@ class DeviceController:
         self.dc_power = None
         self.cooler = None
 
-    # def get_daq(self):
-    #     board_num = int(self.daq_devices[0]["board_num"])  # Or let user select in UI
-    #     return MCCDAQ(board_num)
+    def get_daq(self):
+        return self.daq_devices[0]
 
     def get_power(self):
         return self.dc_power
@@ -67,7 +66,7 @@ class DeviceController:
         selected_device = combo_box.currentText()
         if not selected_device:
             console.append("❌ No device selected.")
-            return
+            return False
 
         board_num = int(selected_device.split('-')[0])
         if self.daq_manager.flash_led(board_num):
@@ -77,27 +76,49 @@ class DeviceController:
             console.append(f"❌ Failed to flash LED on device {selected_device}.")
             return False
     
-    def connect_dc_power(self, device_selection, combo_box, console, status_label, baudrate):
-        port = combo_box.currentText()
+    def connect_dc_power(self, device_selection, port, baudrate, status_label, console):
+        port = port.currentText()
+        device_selection = device_selection.currentText()
+        baudrate = baudrate.text()
 
         try:
             baudrate = int(baudrate)
         except ValueError:
+            
             console.append("❌ Invalid type for baud rate.")
             status_label.setText("❌ Disconnected")
             status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
             return
-        
         if device_selection == "EX300-12":
             self.dc_power = EX300_12(port, baudrate)
             self.dc_power.connect_to_port(port)
-            connection_info = self.dc_power.get_connection_info()
-        self.dc_power = DC61802F(port, baudrate)
-        self.dc_power._connect()
+            if self.dc_power.connected:
+                console.append(f"✅ Connected to {device_selection}.")
+                status_label.setText(f"✅ Connected to {device_selection}.")
+                status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
+            else:
+                console.append(f"❌ Failed to connect to {device_selection}.")
+                status_label.setText("❌ Disconnected")
+                status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
 
+        elif device_selection == "DC61802F":
+            self.dc_power = DC61802F(port, baudrate)
+            self.dc_power.connect_to_port(port)
+
+            if self.dc_power.connected:        
+                console.append(f"✅ Connected to {device_selection}.")
+                status_label.setText(f"✅ Connected to {device_selection}.")
+                status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
+            else:
+                console.append(f"❌ Failed to connect to {device_selection}.")
+                status_label.setText("❌ Disconnected")
+                status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
 
 
     def connect_cooler(self, port, baudrate, status_label, console):
+        port = port.currentText()
+        baudrate = baudrate.text()
+
         try:
             baudrate = int(baudrate)
         except ValueError:
@@ -108,3 +129,15 @@ class DeviceController:
         
         self.cooler = LKLabController(port, baudrate)
         self.cooler._connect()
+        
+        if self.cooler._connection:
+            console.append(f"✅ Connected to Cooler on {port}.")
+            status_label.setText(f"✅ Connected to Cooler on {port}.")
+            status_label.setStyleSheet("color: green; font-family: Arial; font-size: 20px;")
+        else:
+            console.append(f"❌ Failed to connect to Cooler on {port}.")
+            status_label.setText("❌ Disconnected")
+            status_label.setStyleSheet("color: red; font-family: Arial; font-size: 20px;")
+    
+    def has_all_devices_connected(self):
+        return all([self.daq_devices, self.dc_power, self.cooler])

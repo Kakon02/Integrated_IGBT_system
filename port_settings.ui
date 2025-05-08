@@ -34,7 +34,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -54,54 +54,28 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QLabel" name="System_1_Loading">
+        <widget class="QPushButton" name="Start_System_1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>12</pointsize>
+           <pointsize>36</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Panel</enum>
-         </property>
          <property name="text">
-          <string>System 1 Connection State: Loading...</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+          <string>Start System 1</string>
          </property>
         </widget>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_5">
-         <item row="3" column="2">
-          <widget class="QLabel" name="label_32">
-           <property name="text">
-            <string>°C</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_33">
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Run Time:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="font">
@@ -124,8 +98,41 @@
            </property>
           </widget>
          </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_33">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Run Time:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QLabel" name="label_32">
+           <property name="text">
+            <string>°C</string>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="System_1_Duty"/>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="System_1_RunTime"/>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>%</string>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_12">
@@ -140,13 +147,6 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>%</string>
            </property>
           </widget>
          </item>
@@ -166,16 +166,6 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLineEdit" name="System_1_RunTime"/>
-         </item>
-         <item row="4" column="2">
-          <widget class="QLabel" name="label_34">
-           <property name="text">
-            <string>min</string>
            </property>
           </widget>
          </item>
@@ -215,6 +205,13 @@
          <item row="3" column="1">
           <widget class="QLineEdit" name="System_1_Temp"/>
          </item>
+         <item row="4" column="2">
+          <widget class="QLabel" name="label_34">
+           <property name="text">
+            <string>min</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="1">
           <widget class="QLineEdit" name="System_1_Freq"/>
          </item>
@@ -249,100 +246,36 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
-        <widget class="QLabel" name="System_2_Loading">
+        <widget class="QPushButton" name="Start_System_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>12</pointsize>
+           <pointsize>36</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Panel</enum>
-         </property>
          <property name="text">
-          <string>System 2 Connection State: Loading...</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+          <string>Start System 2</string>
          </property>
         </widget>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_6">
-         <item row="3" column="2">
-          <widget class="QLabel" name="label_39">
-           <property name="text">
-            <string>°C</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_40">
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Run Time:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_41">
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>     Frequency:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="System_2_Duty"/>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_42">
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Voltage:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
+         <item row="2" column="2">
           <widget class="QLabel" name="label_43">
            <property name="text">
             <string>%</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="System_2_Voltage"/>
-         </item>
-         <item row="3" column="0">
+         <item row="4" column="0">
           <widget class="QLabel" name="label_44">
            <property name="font">
             <font>
@@ -358,31 +291,29 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="5" column="1">
           <widget class="QLineEdit" name="System_2_RunTime"/>
          </item>
-         <item row="4" column="2">
-          <widget class="QLabel" name="label_45">
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_42">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
            <property name="text">
-            <string>min</string>
+            <string>Voltage:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="System_2_Voltage_unit">
-           <item>
-            <property name="text">
-             <string>V</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>kV</string>
-            </property>
-           </item>
-          </widget>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="System_2_Voltage"/>
          </item>
-         <item row="0" column="2">
+         <item row="1" column="2">
           <widget class="QComboBox" name="System_2_Freq_unit">
            <item>
             <property name="text">
@@ -401,13 +332,34 @@
            </item>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="4" column="1">
           <widget class="QLineEdit" name="System_2_Temp"/>
          </item>
-         <item row="0" column="1">
+         <item row="3" column="2">
+          <widget class="QComboBox" name="System_2_Voltage_unit">
+           <item>
+            <property name="text">
+             <string>V</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>kV</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="5" column="2">
+          <widget class="QLabel" name="label_45">
+           <property name="text">
+            <string>min</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
           <widget class="QLineEdit" name="System_2_Freq"/>
          </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_46">
            <property name="font">
             <font>
@@ -417,6 +369,48 @@
            </property>
            <property name="text">
             <string>  Duty Cycle:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="QLabel" name="label_39">
+           <property name="text">
+            <string>°C</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="System_2_Duty"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_40">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Run Time:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_41">
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>     Frequency:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -501,13 +495,13 @@
        <enum>QFrame::NoFrame</enum>
       </property>
       <property name="text">
-       <string>Approximate Completion Time:</string>
+       <string>Remaining Time:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="System_1_ACTime">
+     <widget class="QLabel" name="System_1_TimeLeft">
       <property name="geometry">
        <rect>
         <x>230</x>
@@ -580,7 +574,7 @@
        <string>Pause</string>
       </property>
      </widget>
-     <widget class="QLabel" name="System_2_ACTime">
+     <widget class="QLabel" name="System_2_TimeLeft">
       <property name="geometry">
        <rect>
         <x>630</x>
@@ -637,7 +631,7 @@
        <enum>QFrame::NoFrame</enum>
       </property>
       <property name="text">
-       <string>Approximate Completion Time:</string>
+       <string>Remaining Time: </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -688,11 +682,11 @@
      <zorder>System_1_Pause</zorder>
      <zorder>System_1_Stop</zorder>
      <zorder>label_14</zorder>
-     <zorder>System_1_ACTime</zorder>
+     <zorder>System_1_TimeLeft</zorder>
      <zorder>line_3</zorder>
      <zorder>System_1_Progress</zorder>
      <zorder>System_2_Pause</zorder>
-     <zorder>System_2_ACTime</zorder>
+     <zorder>System_2_TimeLeft</zorder>
      <zorder>System_2_Stop</zorder>
      <zorder>label_37</zorder>
      <zorder>System_2_Progress</zorder>
@@ -1635,7 +1629,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QTextEdit" name="Console">
+   <widget class="QTextEdit" name="console">
     <property name="geometry">
      <rect>
       <x>800</x>

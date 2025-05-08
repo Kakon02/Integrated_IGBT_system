@@ -30,12 +30,10 @@ class LKLabController:
                 result = client.read_holding_registers(9, 1, unit=self.slave_id)
                 if not result.isError():
                     self.client = client
-                    print(f"✅ Connected to LKLAB device on {self.port}")
                     self._connection = True
                 else:
                     client.close()
                     self._connection = False
-                    raise IOError("Failed to read holding register.")
         
 
     def get_temperatures(self):
@@ -46,12 +44,7 @@ class LKLabController:
             nsv = self.client.read_holding_registers(2, 1, unit=self.slave_id)
             npv_value = self._convert_temp(npv.registers[0])
             nsv_value = self._convert_temp(nsv.registers[0])
-            return {"current": npv_value, "setpoint": nsv_value}
-        
-        else:
-            print("🔄 Attempting to reconnect...")
-            self._connect()  # Attempt to reconnect if client is None
-        
+            return {"current": npv_value, "setpoint": nsv_value}        
         
 
     def _convert_temp(self, raw):
@@ -67,9 +60,6 @@ class LKLabController:
             if val < 0:
                 val += 65536
             self.client.write_register(21, val, unit=self.slave_id)
-        else:
-            print("🔄 Attempting to reconnect...")
-            self._connect()
 
 
     def adjust_temperature(self, delta):
@@ -79,10 +69,7 @@ class LKLabController:
             current_val = nsv.registers[0]
             adjusted_val = (current_val + int(delta * 100)) % 65536
             self.client.write_register(21, adjusted_val, unit=self.slave_id)
-        else:
-            print("🔄 Attempting to reconnect...")
-            self._connect()
-
+            
     def turn_on_operation(self):
         """Turn on the operation."""
         if not self._operation:
