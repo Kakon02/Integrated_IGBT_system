@@ -7,7 +7,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         # Load the UI
-        uic.loadUi("port_settings.ui", self)
+        uic.loadUi("view/port_settings.ui", self)
 
         # You can access all the widgets from the UI file directly
         # Example widgets:
